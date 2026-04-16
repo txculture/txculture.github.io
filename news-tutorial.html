@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网站内容修改教程 - 海南天香文化有限公司</title>
+    <link rel="icon" type="image/png" href="https://bucket.deepsite.design/logo.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap');
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #faf8f5;
+            color: #333;
+        }
+
+        ::selection {
+            background: rgba(184, 134, 11, 0.2);
+            color: #3d2914;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #faf8f5; }
+        ::-webkit-scrollbar-thumb { background: #d4a574; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b8860b; }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid rgba(184,134,11,0.08);
+            box-shadow: 0 2px 16px rgba(61,41,20,0.04);
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b8860b, #d4a574);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        pre {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.7;
+            font-family: 'Fira Code', 'Consolas', monospace;
+        }
+
+        .code-punct { color: #89b4fa; }
+        .code-key { color: #f9e2af; }
+        .code-str { color: #a6e3a1; }
+        .code-comment { color: #6c7086; font-style: italic; }
+        .code-tag { color: #f38ba8; }
+        .code-attr { color: #fab387; }
+        .code-val { color: #a6e3a1; }
+        .code-html-str { color: #a6e3a1; }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(184,134,11,0.15), transparent);
+        }
+
+        .tag-news {
+            display: inline-block;
+            font-size: 10px;
+            padding: 1px 8px;
+            border-radius: 10px;
+            background: rgba(184,134,11,0.1);
+            color: #b8860b;
+            font-weight: 500;
+        }
+        .tag-activity {
+            display: inline-block;
+            font-size: 10px;
+            padding: 1px 8px;
+            border-radius: 10px;
+            background: rgba(59,130,246,0.1);
+            color: #3b82f6;
+            font-weight: 500;
+        }
+
+        .toc-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 1px solid transparent;
+        }
+        .toc-link:hover {
+            background: rgba(184,134,11,0.06);
+            border-color: rgba(184,134,11,0.15);
+            transform: translateX(4px);
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7, #fef9c3);
+            border-left: 4px solid #f59e0b;
+            border-radius: 0 12px 12px 0;
+            padding: 16px 20px;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border-left: 4px solid #10b981;
+            border-radius: 0 12px 12px 0;
+            padding: 16px 20px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-left: 4px solid #3b82f6;
+            border-radius: 0 12px 12px 0;
+            padding: 16px 20px;
+        }
+
+        .danger-box {
+            background: linear-gradient(135deg, #fef2f2, #fecaca);
+            border-left: 4px solid #ef4444;
+            border-radius: 0 12px 12px 0;
+            padding: 16px 20px;
+        }
+
+        .section-anchor {
+            scroll-margin-top: 80px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b8860b, #d4a574);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(184,134,11,0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            z-index: 100;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(184,134,11,0.4);
+        }
+
+        .tab-btn {
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            color: #999;
+        }
+        .tab-btn:hover {
+            color: #b8860b;
+        }
+        .tab-btn.active {
+            background: linear-gradient(135deg, #b8860b, #d4a574);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 12px rgba(184,134,11,0.25);
+        }
+    </style>
+</head>
+<body>
+
+<!-- 顶部标题栏 -->
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#b8860b]/10 shadow-sm">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-[#b8860b] to-[#d4a574] flex items-center justify-center">
+                <span class="text-white font-bold text-sm">教</span>
+            </div>
+            <div>
+                <h1 class="text-base font-bold" style="color:#3d2914;">网站内容修改教程</h1>
+                <p class="text-xs text-gray-400">海南天香文化 · 网站维护指南</p>
+            </div>
+        </div>
+        <a href="index.html" class="text-sm font-medium hover:underline" style="color:#b8860b;">← 返回首页</a>
+    </div>
+</header>
+
+<!-- 侧边导航（桌面端） -->
+<nav class="hidden lg:block fixed left-6 top-1/2 -translate-y-1/2 z-40 w-48" id="sideNav">
+    <div class="bg-white/80 backdrop-blur-sm rounded-2xl border border-[#b8860b]/8 shadow-sm p-3 space-y-1">
+        <a href="#section-overview" class="toc-link text-xs font-medium text-gray-500 hover:text-[#b8860b]">📋 概述</a>
+        <a href="#section-file-structure" class="toc-link text-xs font-medium text-gray-500 hover:text-[#b8860b]">📁 文件结构</a>
+        <a href="#section-banner" class="toc-link text-xs font-medium text-gray-500 hover:text-[#b8860b]">🎯 Banner</a>
+        <a href="#section-products" class="toc-link text-xs font-medium text-gray-500 hover:text-[#b8860b]">🛍️ 产品系列</a>
+        <a href="#section-brand-story" class="toc-link text-xs font-medium text-gray-500 hover:text-[#b8860b]">📖 品牌故事</a>
+        <a href="#section-news" class="toc-link text-xs font-medium text-gray-500 hover:text-[#b8860b]">📰 新闻动态</a>
+        <a href="#section-research" class="toc-link text-xs font-medium text-gray-500 hover:text-[#b8860b]">🔬 科研荣誉</a>
+        <a href="#section-footer" class="toc-link text-xs font-medium text-gray-500 hover:text-[#b8860b]">📍 页脚信息</a>
+        <a href="#section-images" class="toc-link text-xs font-medium text-gray-500 hover:text-[#b8860b]">🖼️ 图片指南</a>
+        <a href="#section-faq" class="toc-link text-xs font-medium text-gray-500 hover:text-[#b8860b]">❓ 常见问题</a>
+    </div>
+</nav>
+
+<main class="max-w-4xl mx-auto px-6 py-10 space-y-10">
+
+    <!-- ==================== 概述 ==================== -->
+    <section id="section-overview" class="card p-8 section-anchor">
+        <div class="flex items-start gap-4 mb-6">
+            <div class="step-number">!</div>
+            <div>
+                <h2 class="text-xl font-bold" style="color:#3d2914;">概述</h2>
+                <p class="text-gray-500 text-sm mt-1">网站所有内容修改指南</p>
+            </div>
+        </div>
+
+        <div class="bg-[#faf8f5] rounded-xl p-5 text-sm leading-relaxed text-gray-700 space-y-3 mb-5">
+            <p>📌 本网站的所有内容都保存在 <strong style="color:#b8860b;">index.html</strong> 这一个文件中，没有额外的数据文件。</p>
+            <p>📌 用任意文本编辑器（推荐 <strong>VS Code</strong>）打开 <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs" style="color:#b8860b;">index.html</code> 即可修改。</p>
+            <p>📌 修改完成后保存文件，刷新网页（<kbd class="bg-white px-1.5 py-0.5 rounded border text-xs">Ctrl + F5</kbd>）即可看到效果。</p>
+            <p>📌 建议每次修改前先 <strong>备份</strong> index.html 文件，改坏了可以恢复。</p>
+        </div>
+
+        <div class="warning-box text-sm">
+            <p class="font-bold text-amber-800 mb-1">⚠️ 重要提醒</p>
+            <p class="text-amber-700">修改时请注意：<strong>英文引号</strong>、<strong>英文逗号</strong>、<strong>英文括号</strong> 等符号必须使用半角（英文）字符，不能用中文标点！</p>
+        </div>
+    </section>
+
+    <!-- ==================== 文件结构 ==================== -->
+    <section id="section-file-structure" class="card p-8 section-anchor">
+        <h2 class="text-xl font-bold mb-6" style="color:#3d2914;">📁 文件结构</h2>
+        <p class="text-sm text-gray-600 mb-5">了解网站文件结构，帮助你快速定位需要修改的位置：</p>
+
+        <div class="bg-[#1e1e2e] rounded-xl p-5 text-sm font-mono leading-relaxed">
+            <div class="text-gray-400">
+                <p><span class="text-[#f9e2af]">📁</span> 网站根目录/</p>
+                <p class="ml-4"><span class="text-[#89b4fa]">├──</span> <span class="text-[#a6e3a1]">index.html</span> <span class="text-[#6c7086]">← ⭐ 主页面（所有内容都在这里）</span></p>
+                <p class="ml-4"><span class="text-[#89b4fa]">├──</span> <span class="text-[#a6e3a1]">style.css</span> <span class="text-[#6c7086]">← 共享样式（一般不需要改）</span></p>
+                <p class="ml-4"><span class="text-[#89b4fa]">├──</span> <span class="text-[#a6e3a1]">about.html</span> <span class="text-[#6c7086]">← 跳转页（自动跳转到品牌故事）</span></p>
+                <p class="ml-4"><span class="text-[#89b4fa]">└──</span> <span class="text-[#a6e3a1]">news-tutorial.html</span> <span class="text-[#6c7086]">← 本教程页面</span></p>
+            </div>
+        </div>
+
+        <div class="mt-5 info-box text-sm">
+            <p class="font-bold text-blue-800 mb-1">💡 快速定位技巧</p>
+            <p class="text-blue-700">在编辑器中按 <kbd class="bg-white px-1.5 py-0.5 rounded border text-xs">Ctrl + F</kbd> 搜索以下关键词，可以快速找到对应内容：</p>
+        </div>
+
+        <div class="mt-4 overflow-x-auto">
+            <table class="w-full text-sm border-collapse">
+                <thead>
+                    <tr class="border-b-2 border-[#b8860b]/20">
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">搜索关键词</th>
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">定位内容</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600">
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">核心产品系列</code></td><td class="py-3 px-4">产品展示区 HTML 卡片</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">const products</code></td><td class="py-3 px-4">产品详情数据（JS 对象）</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">brandStoryData</code></td><td class="py-3 px-4">品牌故事数据</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">newsData</code></td><td class="py-3 px-4">新闻动态数据</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">科研赋能</code></td><td class="py-3 px-4">科研荣誉区</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">联系方式</code></td><td class="py-3 px-4">页脚联系信息</td></tr>
+                    <tr><td class="py-3 px-4"><code style="color:#b8860b;">一缕天香</code></td><td class="py-3 px-4">Banner 主标题</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ==================== Banner 修改 ==================== -->
+    <section id="section-banner" class="card p-8 section-anchor">
+        <h2 class="text-xl font-bold mb-6" style="color:#3d2914;">🎯 一、Banner 横幅修改</h2>
+
+        <p class="text-sm text-gray-600 mb-4">Banner 是网页顶部的大横幅区域，显示主标题和副标题。搜索 <code style="color:#b8860b;">一缕天香</code> 可以定位到。</p>
+
+        <h3 class="font-bold text-sm mb-3" style="color:#3d2914;">修改主标题</h3>
+        <p class="text-sm text-gray-600 mb-3">搜索 <code style="color:#b8860b;">一缕天香</code>，找到如下代码：</p>
+<pre><span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-val">"banner-title-row"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;span</span> <span class="code-attr">class=</span><span class="code-val">"title-text text-white"</span><span class="code-tag">&gt;</span><span class="code-comment">一缕天香</span><span class="code-tag">&lt;/span&gt;</span>           <span class="code-comment">&lt;!-- ← 修改左侧文字 --&gt;</span>
+    <span class="code-tag">&lt;span</span> <span class="code-attr">class=</span><span class="code-val">"title-divider"</span><span class="code-tag">&gt;&lt;/span&gt;</span>
+    <span class="code-tag">&lt;span</span> <span class="code-attr">class=</span><span class="code-val">"title-text gold-accent"</span><span class="code-tag">&gt;</span><span class="code-comment">匠心传承</span><span class="code-tag">&lt;/span&gt;</span>       <span class="code-comment">&lt;!-- ← 修改右侧文字 --&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+
+        <div class="divider my-6"></div>
+
+        <h3 class="font-bold text-sm mb-3" style="color:#3d2914;">修改副标题</h3>
+        <p class="text-sm text-gray-600 mb-3">搜索 <code style="color:#b8860b;">TianXiang</code>，找到如下代码：</p>
+<pre><span class="code-tag">&lt;p</span> <span class="code-attr">class=</span><span class="code-val">"...banner-subtitle ..."</span><span class="code-tag">&gt;</span>
+    <span class="code-comment">Hainan Tianxiang Culture Co., Ltd.</span>    <span class="code-comment">&lt;!-- ← 修改英文副标题 --&gt;</span>
+<span class="code-tag">&lt;/p&gt;</span></pre>
+
+        <div class="tip-box text-sm mt-5">
+            <p class="font-bold text-emerald-800 mb-1">💡 提示</p>
+            <p class="text-emerald-700">Banner 的背景是 CSS 绘制的动画效果，不是图片，所以不需要替换背景图。如果需要完全自定义背景，需要修改 CSS 中的 <code>.banner-bg-gradient</code> 样式。</p>
+        </div>
+    </section>
+
+    <!-- ==================== 核心产品系列 ==================== -->
+    <section id="section-products" class="card p-8 section-anchor">
+        <h2 class="text-xl font-bold mb-2" style="color:#3d2914;">🛍️ 二、核心产品系列（重点）</h2>
+        <p class="text-gray-500 text-sm mb-6">产品区域由两部分组成：<strong>HTML 卡片</strong>（首页展示）+ <strong>JS 数据</strong>（弹窗详情），修改时两部分都要同步更新。</p>
+
+        <!-- 整体架构说明 -->
+        <div class="bg-[#faf8f5] rounded-xl p-5 mb-6">
+            <h4 class="font-bold text-sm mb-3" style="color:#3d2914;">🏗️ 产品系统架构</h4>
+            <div class="text-sm text-gray-700 space-y-2">
+                <p>1️⃣ <strong style="color:#b8860b;">HTML 卡片区</strong>（搜索"核心产品系列"）— 首页上看到的4张大卡片</p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;每张卡片 = 一个产品系列的入口，点击后弹出详情</p>
+                <p>2️⃣ <strong style="color:#b8860b;">JS products 对象</strong>（搜索"const products"）— 产品详情弹窗数据</p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;每个系列下的具体产品列表，包含名称、图片、描述、价格</p>
+            </div>
+        </div>
+
+        <!-- 2.1 产品卡片 HTML 结构 -->
+        <h3 class="font-bold text-lg mb-4" style="color:#3d2914;">2.1 产品卡片 HTML 结构</h3>
+        <p class="text-sm text-gray-600 mb-3">搜索 <code style="color:#b8860b;">核心产品系列</code>，往下找到 <code style="color:#b8860b;">grid</code> 布局区域。每张卡片结构如下：</p>
+<pre><span class="code-comment">&lt;!-- 沉香系列 --&gt;</span>
+<span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-val">"fade-in"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-val">"group relative h-[460px] ..."</span>
+         <span class="code-attr">onclick=</span><span class="code-val">"openModal('<span class="code-html-str" style="color:#f38ba8;">aloeswood</span>')"</span><span class="code-tag">&gt;</span>   <span class="code-comment">&lt;!-- ← 卡片ID，必须与JS数据一致 --&gt;</span>
+        <span class="code-tag">&lt;img</span> <span class="code-attr">src=</span><span class="code-val">"<span class="code-html-str">http://static.photos/minimal/640x360/88</span>"</span>         <span class="code-comment">&lt;!-- ← 卡片背景图 --&gt;</span>
+             <span class="code-attr">alt=</span><span class="code-val">"<span class="code-html-str">沉香系列</span>"</span><span class="code-tag">&gt;</span>                              <span class="code-comment">&lt;!-- ← 图片alt文字 --&gt;</span>
+        <span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-val">"absolute bottom-0 ..."</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;h4</span> <span class="code-attr">class=</span><span class="code-val">"text-white ..."</span><span class="code-tag">&gt;</span><span class="code-comment">沉香系列</span><span class="code-tag">&lt;/h4&gt;</span>                       <span class="code-comment">&lt;!-- ← 系列名称 --&gt;</span>
+            <span class="code-tag">&lt;p</span> <span class="code-attr">class=</span><span class="code-val">"text-white/50 ..."</span><span class="code-tag">&gt;</span><span class="code-comment">沉香手串、熏香、精油、沉香酒</span><span class="code-tag">&lt;/p&gt;</span> <span class="code-comment">&lt;!-- ← 系列简介 --&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+
+        <div class="divider my-6"></div>
+
+        <!-- 2.2 JS products 数据结构 -->
+        <h3 class="font-bold text-lg mb-4" style="color:#3d2914;">2.2 JS products 数据结构</h3>
+        <p class="text-sm text-gray-600 mb-4">搜索 <code style="color:#b8860b;">const products</code>，找到产品详情数据。每个产品系列结构如下：</p>
+<pre><span class="code-key">const</span> products <span class="code-punct">=</span> <span class="code-punct">{</span>
+    <span class="code-comment">// aloeswood 是系列ID，需与HTML卡片的 onclick 一致</span>
+    <span class="code-key">aloeswood</span><span class="code-punct">:</span> <span class="code-punct">{</span>
+        <span class="code-key">name</span><span class="code-punct">:</span> <span class="code-str">'沉香系列'</span><span class="code-punct">,</span>                  <span class="code-comment">// ★ 系列名称（弹窗顶部显示）</span>
+        <span class="code-key">description</span><span class="code-punct">:</span> <span class="code-str">'沉香，被誉为...'</span><span class="code-punct">,</span>        <span class="code-comment">// ★ 系列描述（弹窗顶部显示）</span>
+        <span class="code-key">items</span><span class="code-punct">:</span> <span class="code-punct">[</span>                             <span class="code-comment">// ★ 产品列表（弹窗卡片）</span>
+            <span class="code-punct">{</span>
+                <span class="code-key">name</span><span class="code-punct">:</span> <span class="code-str">'沉香手串'</span><span class="code-punct">,</span>               <span class="code-comment">// ★ 产品名称</span>
+                <span class="code-key">image</span><span class="code-punct">:</span> <span class="code-str">'http://static.photos/...'</span><span class="code-punct">,</span> <span class="code-comment">// ★ 产品图片URL</span>
+                <span class="code-key">desc</span><span class="code-punct">:</span> <span class="code-str">'精选百年沉香老料...'</span><span class="code-punct">,</span>  <span class="code-comment">// ★ 产品描述</span>
+                <span class="code-key">price</span><span class="code-punct">:</span> <span class="code-str">'¥1,280起'</span>               <span class="code-comment">// ★ 产品价格</span>
+            <span class="code-punct">}</span><span class="code-punct">,</span>
+            <span class="code-comment">// ... 更多产品</span>
+        <span class="code-punct">]</span>
+    <span class="code-punct">}</span><span class="code-punct">,</span>
+    <span class="code-key">rosewood</span><span class="code-punct">:</span> <span class="code-punct">{ ...</span> <span class="code-punct">}</span><span class="code-punct">,</span>    <span class="code-comment">// 花梨木系列</span>
+    <span class="code-key">jiangzhen</span><span class="code-punct">:</span> <span class="code-punct">{ ...</span> <span class="code-punct">}</span><span class="code-punct">,</span>    <span class="code-comment">// 降真香系列</span>
+    <span class="code-key">healthwine</span><span class="code-punct">:</span> <span class="code-punct">{ ...</span> <span class="code-punct">}</span>     <span class="code-comment">// 保健酒系列</span>
+<span class="code-punct">}</span><span class="code-punct">;</span></pre>
+
+        <div class="overflow-x-auto mt-5">
+            <table class="w-full text-sm border-collapse">
+                <thead>
+                    <tr class="border-b-2 border-[#b8860b]/20">
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">字段</th>
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">说明</th>
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">示例</th>
+                        <th class="text-center py-3 px-4 font-bold" style="color:#3d2914;">必填</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600">
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">name</code></td><td class="py-3 px-4">系列/产品名称</td><td class="py-3 px-4"><code>'沉香系列'</code></td><td class="py-3 px-4 text-center">★</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">description</code></td><td class="py-3 px-4">系列描述（仅系列级）</td><td class="py-3 px-4"><code>'沉香，被誉为...'</code></td><td class="py-3 px-4 text-center">★</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">items</code></td><td class="py-3 px-4">产品列表（仅系列级）</td><td class="py-3 px-4">数组 <code>[{...}, {...}]</code></td><td class="py-3 px-4 text-center">★</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">image</code></td><td class="py-3 px-4">产品图片URL</td><td class="py-3 px-4">完整URL地址</td><td class="py-3 px-4 text-center">★</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">desc</code></td><td class="py-3 px-4">产品描述</td><td class="py-3 px-4"><code>'精选百年沉香...'</code></td><td class="py-3 px-4 text-center">★</td></tr>
+                    <tr><td class="py-3 px-4"><code style="color:#b8860b;">price</code></td><td class="py-3 px-4">产品价格</td><td class="py-3 px-4"><code>'¥1,280起'</code></td><td class="py-3 px-4 text-center">★</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="divider my-8"></div>
+
+        <!-- 2.3 添加新产品系列 -->
+        <h3 class="font-bold text-lg mb-4" style="color:#3d2914;">2.3 添加一个新产品系列</h3>
+        <p class="text-sm text-gray-600 mb-3">需要同时修改 <strong>HTML 卡片</strong> 和 <strong>JS 数据</strong> 两个地方。以添加"檀香系列"为例：</p>
+
+        <div class="flex items-start gap-4 mb-4">
+            <div class="step-number">1</div>
+            <div>
+                <p class="font-bold" style="color:#3d2914;">第一步：添加 JS 数据</p>
+                <p class="text-sm text-gray-500 mt-1">搜索 <code style="color:#b8860b;">const products</code>，在最后一个系列后面添加新系列：</p>
+            </div>
+        </div>
+<pre><span class="code-key">const</span> products <span class="code-punct">=</span> <span class="code-punct">{</span>
+    <span class="code-key">aloeswood</span><span class="code-punct">:</span> <span class="code-punct">{ ...</span> <span class="code-punct">}</span><span class="code-punct">,</span>
+    <span class="code-key">rosewood</span><span class="code-punct">:</span> <span class="code-punct">{ ...</span> <span class="code-punct">}</span><span class="code-punct">,</span>
+    <span class="code-key">jiangzhen</span><span class="code-punct">:</span> <span class="code-punct">{ ...</span> <span class="code-punct">}</span><span class="code-punct">,</span>
+    <span class="code-key">healthwine</span><span class="code-punct">:</span> <span class="code-punct">{ ...</span> <span class="code-punct">}</span><span class="code-punct">,</span>
+
+    <span class="code-comment">// 👇 ===== 新增檀香系列 =====</span>
+    <span class="code-key">sandalwood</span><span class="code-punct">:</span> <span class="code-punct">{</span>                          <span class="code-comment">// ← 系列ID（英文，唯一标识）</span>
+        <span class="code-key">name</span><span class="code-punct">:</span> <span class="code-str">'檀香系列'</span><span class="code-punct">,</span>
+        <span class="code-key">description</span><span class="code-punct">:</span> <span class="code-str">'檀香，自古被视为圣洁之木，香气醇厚温润，具有安神定气的功效。'</span><span class="code-punct">,</span>
+        <span class="code-key">items</span><span class="code-punct">:</span> <span class="code-punct">[</span>
+            <span class="code-punct">{</span>
+                <span class="code-key">name</span><span class="code-punct">:</span> <span class="code-str">'檀香手串'</span><span class="code-punct">,</span>
+                <span class="code-key">image</span><span class="code-punct">:</span> <span class="code-str">'http://static.photos/minimal/400x300/501'</span><span class="code-punct">,</span>
+                <span class="code-key">desc</span><span class="code-punct">:</span> <span class="code-str">'精选老山檀香，香气醇厚持久。'</span><span class="code-punct">,</span>
+                <span class="code-key">price</span><span class="code-punct">:</span> <span class="code-str">'¥980起'</span>
+            <span class="code-punct">}</span><span class="code-punct">,</span>
+            <span class="code-punct">{</span>
+                <span class="code-key">name</span><span class="code-punct">:</span> <span class="code-str">'檀香熏香'</span><span class="code-punct">,</span>
+                <span class="code-key">image</span><span class="code-punct">:</span> <span class="code-str">'http://static.photos/minimal/400x300/502'</span><span class="code-punct">,</span>
+                <span class="code-key">desc</span><span class="code-punct">:</span> <span class="code-str">'传统工艺制作檀香线香，静心凝神。'</span><span class="code-punct">,</span>
+                <span class="code-key">price</span><span class="code-punct">:</span> <span class="code-str">'¥268起'</span>
+            <span class="code-punct">}</span>
+        <span class="code-punct">]</span>
+    <span class="code-punct">}</span>
+    <span class="code-comment">// 👆 ===== 新增结束 =====</span>
+<span class="code-punct">}</span><span class="code-punct">;</span></pre>
+
+        <div class="flex items-start gap-4 mb-4 mt-6">
+            <div class="step-number">2</div>
+            <div>
+                <p class="font-bold" style="color:#3d2914;">第二步：添加 HTML 卡片</p>
+                <p class="text-sm text-gray-500 mt-1">搜索 <code style="color:#b8860b;">核心产品系列</code>，在 grid 容器内最后一个卡片后添加新卡片：</p>
+            </div>
+        </div>
+<pre><span class="code-comment">&lt;!-- 檀香系列 --&gt;</span>
+<span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-val">"fade-in"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-val">"group relative h-[460px] rounded-2xl overflow-hidden cursor-pointer ..."</span>
+         <span class="code-attr">onclick=</span><span class="code-val">"openModal('<span class="code-html-str" style="color:#f38ba8;">sandalwood</span>')"</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;img</span> <span class="code-attr">src=</span><span class="code-val">"<span class="code-html-str">http://static.photos/minimal/640x360/501</span>"</span> <span class="code-attr">alt=</span><span class="code-val">"<span class="code-html-str">檀香系列</span>"</span>
+             <span class="code-attr">class=</span><span class="code-val">"absolute inset-0 w-full h-full object-cover ..."</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-val">"absolute inset-0 bg-gradient-to-t ..."</span><span class="code-tag">&gt;&lt;/div&gt;</span>
+        <span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-val">"absolute bottom-0 left-0 right-0 p-7 z-10"</span><span class="code-tag">&gt;</span>
+            <span class="code-tag">&lt;h4</span> <span class="code-attr">class=</span><span class="code-val">"text-white text-[22px] font-bold mb-2.5 tracking-wider"</span><span class="code-tag">&gt;</span><span class="code-comment">檀香系列</span><span class="code-tag">&lt;/h4&gt;</span>
+            <span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-val">"w-8 h-[2px] bg-[#b8860b] mb-3 ..."</span><span class="code-tag">&gt;&lt;/div&gt;</span>
+            <span class="code-tag">&lt;p</span> <span class="code-attr">class=</span><span class="code-val">"text-white/50 text-[13px] leading-relaxed"</span><span class="code-tag">&gt;</span><span class="code-comment">檀香手串、檀香熏香&lt;br class="hidden sm:block"&gt;古法圣洁之木</span><span class="code-tag">&lt;/p&gt;</span>
+            <span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-val">"mt-5 inline-flex items-center gap-2 bg-[#b8860b] ..."</span><span class="code-tag">&gt;</span>
+                <span class="code-tag">&lt;span&gt;</span><span class="code-comment">探索系列</span><span class="code-tag">&lt;/span&gt;</span>
+                <span class="code-tag">&lt;i</span> <span class="code-attr">data-lucide=</span><span class="code-val">"arrow-right"</span> <span class="code-attr">class=</span><span class="code-val">"w-4 h-4"</span><span class="code-tag">&gt;&lt;/i&gt;</span>
+            <span class="code-tag">&lt;/div&gt;</span>
+        <span class="code-tag">&lt;/div&gt;</span>
+        <span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-val">"absolute bottom-0 left-0 h-[3px] bg-gradient-to-r ..."</span><span class="code-tag">&gt;&lt;/div&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+
+        <div class="warning-box text-sm mt-5">
+            <p class="font-bold text-amber-800 mb-1">⚠️ 关键：ID 必须一致</p>
+            <p class="text-amber-700">HTML 中 <code>onclick="openModal('<strong>sandalwood</strong>')"</code> 的参数 <strong>sandalwood</strong>，必须与 JS 中 <code><strong>sandalwood</strong>: { ... }</code> 的键名完全一致！否则点击卡片无法弹出详情。</p>
+        </div>
+
+        <div class="divider my-8"></div>
+
+        <!-- 2.4 删除产品系列 -->
+        <h3 class="font-bold text-lg mb-4" style="color:#3d2914;">2.4 删除一个产品系列</h3>
+        <p class="text-sm text-gray-600 mb-3">同样需要删除两处：HTML 卡片 + JS 数据。</p>
+
+        <div class="flex items-start gap-4 mb-4">
+            <div class="step-number">1</div>
+            <div>
+                <p class="font-bold" style="color:#3d2914;">删除 HTML 卡片</p>
+                <p class="text-sm text-gray-500 mt-1">找到对应的 <code>&lt;!-- xxx系列 --&gt;</code> 注释，删除整个 <code>&lt;div class="fade-in"&gt;...&lt;/div&gt;</code> 块</p>
+            </div>
+        </div>
+
+        <div class="flex items-start gap-4 mb-4">
+            <div class="step-number">2</div>
+            <div>
+                <p class="font-bold" style="color:#3d2914;">删除 JS 数据</p>
+                <p class="text-sm text-gray-500 mt-1">删除对应的整个键值对，如 <code>jiangzhen: { ... },</code> 注意逗号处理</p>
+            </div>
+        </div>
+
+<pre><span class="code-key">const</span> products <span class="code-punct">=</span> <span class="code-punct">{</span>
+    <span class="code-key">aloeswood</span><span class="code-punct">:</span> <span class="code-punct">{ ...</span> <span class="code-punct">}</span><span class="code-punct">,</span>
+    <span class="code-key">rosewood</span><span class="code-punct">:</span> <span class="code-punct">{ ...</span> <span class="code-punct">}</span><span class="code-punct">,</span>
+<span class="code-comment">//  👇 删除这一整段 ──────────────────</span>
+<span class="code-comment">//  jiangzhen: { ... },</span>
+<span class="code-comment">//  👆 删除到这里 ──────────────────────</span>
+    <span class="code-key">healthwine</span><span class="code-punct">:</span> <span class="code-punct">{ ...</span> <span class="code-punct">}</span>       <span class="code-comment">// ← 注意：这里原来有逗号，删除上一项后逗号要去掉或保留</span>
+<span class="code-punct">}</span><span class="code-punct">;</span></pre>
+
+        <div class="danger-box text-sm mt-5">
+            <p class="font-bold text-red-800 mb-1">🔴 删除注意事项</p>
+            <p class="text-red-700">删除 JS 对象中的一个键值对时，注意前后的<strong>逗号</strong>。如果删除的是最后一项，前一项末尾的逗号要去掉（JS 不允许对象末尾有多余逗号虽然现代浏览器可能容忍）。如果删除中间项，确保剩余项之间的逗号正确。</p>
+        </div>
+
+        <div class="divider my-8"></div>
+
+        <!-- 2.5 修改已有产品 -->
+        <h3 class="font-bold text-lg mb-4" style="color:#3d2914;">2.5 修改已有产品系列中的产品</h3>
+        <p class="text-sm text-gray-600 mb-3">在 <code style="color:#b8860b;">products</code> 对象中找到对应系列的 <code style="color:#b8860b;">items</code> 数组，直接修改字段内容即可：</p>
+
+        <p class="text-sm font-bold mb-3" style="color:#3d2914;">修改前 ↓</p>
+<pre><span class="code-punct">{</span>
+    <span class="code-key">name</span><span class="code-punct">:</span> <span class="code-str">'沉香手串'</span><span class="code-punct">,</span>
+    <span class="code-key">image</span><span class="code-punct">:</span> <span class="code-str">'http://static.photos/minimal/400x300/101'</span><span class="code-punct">,</span>
+    <span class="code-key">desc</span><span class="code-punct">:</span> <span class="code-str">'精选百年沉香老料，手工打磨...'</span><span class="code-punct">,</span>
+    <span class="code-key">price</span><span class="code-punct">:</span> <span class="code-str">'¥1,280起'</span>
+<span class="code-punct">}</span></pre>
+
+        <p class="text-sm font-bold mb-3 mt-5" style="color:#3d2914;">修改后 ↓</p>
+<pre><span class="code-punct">{</span>
+    <span class="code-key">name</span><span class="code-punct">:</span> <span class="code-str">'沉香手串'</span><span class="code-punct">,</span>                                <span class="code-comment">// ← 名称不变</span>
+    <span class="code-key">image</span><span class="code-punct">:</span> <span class="code-str">'images/products/bracelet-new.jpg'</span><span class="code-punct">,</span>     <span class="code-comment">// ← 换成真实图片路径</span>
+    <span class="code-key">desc</span><span class="code-punct">:</span> <span class="code-str">'精选百年沉香老料，纯手工打磨，每颗珠子温润如玉'</span><span class="code-punct">,</span>  <span class="code-comment">// ← 修改描述</span>
+    <span class="code-key">price</span><span class="code-punct">:</span> <span class="code-str">'¥1,580起'</span>                                 <span class="code-comment">// ← 修改价格</span>
+<span class="code-punct">}</span></pre>
+
+        <div class="divider my-8"></div>
+
+        <!-- 2.6 添加/删除子产品 -->
+        <h3 class="font-bold text-lg mb-4" style="color:#3d2914;">2.6 在已有系列中添加/删除子产品</h3>
+
+        <h4 class="font-bold text-sm mb-3" style="color:#3d2914;">➕ 添加子产品</h4>
+        <p class="text-sm text-gray-600 mb-3">找到对应系列的 <code style="color:#b8860b;">items</code> 数组，在末尾添加新产品：</p>
+<pre><span class="code-key">items</span><span class="code-punct">:</span> <span class="code-punct">[</span>
+    <span class="code-punct">{ ...</span> <span class="code-punct">}</span><span class="code-punct">,</span>     <span class="code-comment">// 原有产品1</span>
+    <span class="code-punct">{ ...</span> <span class="code-punct">}</span><span class="code-punct">,</span>     <span class="code-comment">// 原有产品2</span>
+
+    <span class="code-comment">// 👇 新增子产品</span>
+    <span class="code-punct">{</span>
+        <span class="code-key">name</span><span class="code-punct">:</span> <span class="code-str">'沉香香囊'</span><span class="code-punct">,</span>
+        <span class="code-key">image</span><span class="code-punct">:</span> <span class="code-str">'http://static.photos/minimal/400x300/105'</span><span class="code-punct">,</span>
+        <span class="code-key">desc</span><span class="code-punct">:</span> <span class="code-str">'纯天然沉香粉填充，古法香囊，随身佩戴辟邪安神。'</span><span class="code-punct">,</span>
+        <span class="code-key">price</span><span class="code-punct">:</span> <span class="code-str">'¥168起'</span>
+    <span class="code-punct">}</span>
+<span class="code-punct">]</span></pre>
+
+        <div class="divider my-4"></div>
+
+        <h4 class="font-bold text-sm mb-3" style="color:#3d2914;">🗑️ 删除子产品</h4>
+        <p class="text-sm text-gray-600 mb-3">删除 items 数组中对应的产品对象，注意逗号处理：</p>
+<pre><span class="code-key">items</span><span class="code-punct">:</span> <span class="code-punct">[</span>
+    <span class="code-punct">{ ...</span> <span class="code-punct">}</span><span class="code-punct">,</span>     <span class="code-comment">// 产品1 — 保留</span>
+<span class="code-comment">//  { ... },     ← 产品2 — 删除这一行</span>
+    <span class="code-punct">{ ...</span> <span class="code-punct">}</span>      <span class="code-comment">// 产品3 — 保留（注意前面的逗号）</span>
+<span class="code-punct">]</span></pre>
+
+        <div class="tip-box text-sm mt-5">
+            <p class="font-bold text-emerald-800 mb-1">💡 小贴士</p>
+            <p class="text-emerald-700">每个系列建议保持 <strong>2-4 个子产品</strong>，弹窗排版效果最佳。产品数量为奇数时视觉平衡更好。</p>
+        </div>
+
+        <div class="divider my-8"></div>
+
+        <!-- 2.7 更换产品图片 -->
+        <h3 class="font-bold text-lg mb-4" style="color:#3d2914;">2.7 更换产品图片</h3>
+        <p class="text-sm text-gray-600 mb-4">产品图片出现在 <strong>两处</strong>，都需要替换：</p>
+
+        <div class="space-y-5">
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <h4 class="font-bold text-sm mb-2" style="color:#3d2914;">位置一：首页卡片背景图</h4>
+                <p class="text-xs text-gray-500 mb-3">搜索系列名称如"沉香系列"，找到对应的 <code>&lt;img&gt;</code> 标签</p>
+<pre><span class="code-tag">&lt;img</span> <span class="code-attr">src=</span><span class="code-val">"<span class="code-html-str" style="text-decoration: line-through;">http://static.photos/minimal/640x360/88</span><span class="code-html-str">images/series/aloeswood.jpg</span>"</span>
+     <span class="code-attr">alt=</span><span class="code-val">"沉香系列"</span>
+     <span class="code-attr">class=</span><span class="code-val">"absolute inset-0 w-full h-full object-cover ..."</span><span class="code-tag">&gt;</span></pre>
+                <p class="text-xs text-gray-400 mt-2">📐 推荐尺寸：640×360 或 1200×630，比例 16:9</p>
+            </div>
+
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <h4 class="font-bold text-sm mb-2" style="color:#3d2914;">位置二：JS 弹窗中的产品图片</h4>
+                <p class="text-xs text-gray-500 mb-3">搜索 <code style="color:#b8860b;">const products</code>，修改对应产品的 <code>image</code> 字段</p>
+<pre><span class="code-punct">{</span>
+    <span class="code-key">name</span><span class="code-punct">:</span> <span class="code-str">'沉香手串'</span><span class="code-punct">,</span>
+    <span class="code-key">image</span><span class="code-punct">:</span> <span class="code-str">'<span style="text-decoration: line-through;">http://static.photos/minimal/400x300/101</span><span style="color:#f38ba8;">images/products/aloeswood-bracelet.jpg</span>'</span><span class="code-punct">,</span>  <span class="code-comment">← 修改这里</span>
+    <span class="code-key">desc</span><span class="code-punct">:</span> <span class="code-str">'精选百年沉香老料...'</span><span class="code-punct">,</span>
+    <span class="code-key">price</span><span class="code-punct">:</span> <span class="code-str">'¥1,280起'</span>
+<span class="code-punct">}</span></pre>
+                <p class="text-xs text-gray-400 mt-2">📐 推荐尺寸：400×300，比例 4:3</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 品牌故事修改 ==================== -->
+    <section id="section-brand-story" class="card p-8 section-anchor">
+        <h2 class="text-xl font-bold mb-6" style="color:#3d2914;">📖 三、品牌故事修改</h2>
+
+        <p class="text-sm text-gray-600 mb-4">品牌故事区域由 <strong>HTML 简介卡片</strong> 和 <strong>JS brandStoryData 对象</strong> 组成。</p>
+
+        <!-- 3.1 修改品牌简介 -->
+        <h3 class="font-bold text-sm mb-3" style="color:#3d2914;">3.1 修改品牌简介（HTML）</h3>
+        <p class="text-sm text-gray-600 mb-3">搜索 <code style="color:#b8860b;">品牌简介</code>，找到简介内容区域：</p>
+<pre><span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-val">"space-y-5 text-gray-700 ..."</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;p&gt;</span>
+        <span class="code-tag">&lt;span</span> <span class="code-attr">class=</span><span class="code-val">"..."</span><span class="code-tag">&gt;</span><span class="code-comment">1992</span><span class="code-tag">&lt;/span&gt;</span>年，海南天香文化有限公司...   <span class="code-comment">&lt;!-- ← 修改文字 --&gt;</span>
+    <span class="code-tag">&lt;/p&gt;</span>
+    <span class="code-tag">&lt;p&gt;</span>
+        公司拥有<span class="code-tag">&lt;span</span> <span class="code-attr">class=</span><span class="code-val">"..."</span><span class="code-tag">&gt;</span><span class="code-comment">1.8万亩</span><span class="code-tag">&lt;/span&gt;</span>沉香生态种植基地...  <span class="code-comment">&lt;!-- ← 修改文字 --&gt;</span>
+    <span class="code-tag">&lt;/p&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+
+        <div class="tip-box text-sm mt-4 mb-6">
+            <p class="font-bold text-emerald-800 mb-1">💡 高亮数字写法</p>
+            <p class="text-emerald-700">文本中需要高亮的关键数字使用 <code>&lt;span class="..."&gt;数字&lt;/span&gt;</code> 包裹，会显示为金色背景标签效果。</p>
+        </div>
+
+        <div class="divider my-6"></div>
+
+        <!-- 3.2 修改品牌故事详情 -->
+        <h3 class="font-bold text-sm mb-3" style="color:#3d2914;">3.2 修改品牌故事详情（JS）</h3>
+        <p class="text-sm text-gray-600 mb-3">搜索 <code style="color:#b8860b;">brandStoryData</code>，找到品牌故事数据对象：</p>
+<pre><span class="code-key">const</span> brandStoryData <span class="code-punct">=</span> <span class="code-punct">{</span>
+    <span class="code-key">origin</span><span class="code-punct">:</span> <span class="code-punct">{</span>         <span class="code-comment">// 创立初心</span>
+        <span class="code-key">title</span><span class="code-punct">:</span> <span class="code-str">'创立初心'</span><span class="code-punct">,</span>
+        <span class="code-key">subtitle</span><span class="code-punct">:</span> <span class="code-str">'Origin'</span><span class="code-punct">,</span>
+        <span class="code-key">image</span><span class="code-punct">:</span> <span class="code-str">'http://static.photos/nature/640x360/11'</span><span class="code-punct">,</span>
+        <span class="code-key">content</span><span class="code-punct">:</span> <span class="code-str">`&lt;p&gt;故事正文...&lt;/p&gt;`</span>
+    <span class="code-punct">}</span><span class="code-punct">,</span>
+    <span class="code-key">planting</span><span class="code-punct">:</span> <span class="code-punct">{ ...</span> <span class="code-punct">}</span><span class="code-punct">,</span>   <span class="code-comment">// 生态种植</span>
+    <span class="code-key">craft</span><span class="code-punct">:</span> <span class="code-punct">{ ...</span> <span class="code-punct">}</span><span class="code-punct">,</span>       <span class="code-comment">// 匠心工艺</span>
+    <span class="code-key">research</span><span class="code-punct">:</span> <span class="code-punct">{ ...</span> <span class="code-punct">}</span><span class="code-punct">,</span>    <span class="code-comment">// 科研创新</span>
+    <span class="code-key">vision</span><span class="code-punct">:</span> <span class="code-punct">{ ...</span> <span class="code-punct">}</span>      <span class="code-comment">// 走向世界</span>
+<span class="code-punct">}</span><span class="code-punct">;</span></pre>
+
+        <div class="overflow-x-auto mt-4">
+            <table class="w-full text-sm border-collapse">
+                <thead>
+                    <tr class="border-b-2 border-[#b8860b]/20">
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">字段</th>
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">说明</th>
+                        <th class="text-center py-3 px-4 font-bold" style="color:#3d2914;">必填</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600">
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">title</code></td><td class="py-3 px-4">故事标题</td><td class="py-3 px-4 text-center">★</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">subtitle</code></td><td class="py-3 px-4">英文副标题</td><td class="py-3 px-4 text-center">★</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">image</code></td><td class="py-3 px-4">弹窗顶部大图</td><td class="py-3 px-4 text-center">★</td></tr>
+                    <tr><td class="py-3 px-4"><code style="color:#b8860b;">content</code></td><td class="py-3 px-4">正文HTML，用反引号 <code>``</code> 包裹</td><td class="py-3 px-4 text-center">★</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="text-sm text-gray-600 mt-4 mb-3">修改 <code style="color:#b8860b;">content</code> 时，使用反引号包裹可以自由换行，支持 HTML 标签：</p>
+<pre><span class="code-key">content</span><span class="code-punct">:</span> <span class="code-str">`
+    &lt;p&gt;这是第一段内容，讲述品牌创立的故事。&lt;/p&gt;
+    &lt;p&gt;这是第二段内容，描述发展历程。&lt;/p&gt;
+    &lt;img src="http://static.photos/nature/640x360/22"
+         style="width:100%;border-radius:12px;margin:16px 0;"
+         alt="配图说明"&gt;
+    &lt;p&gt;这是图片下方的补充说明。&lt;/p&gt;
+`</span></pre>
+
+        <div class="divider my-6"></div>
+
+        <h3 class="font-bold text-sm mb-3" style="color:#3d2914;">3.3 更换品牌故事图片</h3>
+        <p class="text-sm text-gray-600 mb-3">修改对应故事的 <code style="color:#b8860b;">image</code> 字段：</p>
+<pre><span class="code-key">image</span><span class="code-punct">:</span> <span class="code-str">'<span style="text-decoration: line-through;">http://static.photos/nature/640x360/11</span><span style="color:#f38ba8;">images/story/origin.jpg</span>'</span></pre>
+        <p class="text-xs text-gray-400 mt-2">📐 推荐尺寸：640×360，比例 16:9</p>
+    </section>
+
+    <!-- ==================== 新闻动态修改 ==================== -->
+    <section id="section-news" class="card p-8 section-anchor">
+        <h2 class="text-xl font-bold mb-6" style="color:#3d2914;">📰 四、新闻动态修改</h2>
+
+        <p class="text-sm text-gray-600 mb-5">搜索 <code style="color:#b8860b;">newsData</code>，找到新闻数据数组。每条新闻的数据结构：</p>
+
+        <div class="overflow-x-auto mb-5">
+            <table class="w-full text-sm border-collapse">
+                <thead>
+                    <tr class="border-b-2 border-[#b8860b]/20">
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">字段名</th>
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">说明</th>
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">格式/示例</th>
+                        <th class="text-center py-3 px-4 font-bold" style="color:#3d2914;">必填</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600">
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">type</code></td><td class="py-3 px-4">新闻类型</td><td class="py-3 px-4"><span class="tag-news">news</span> 或 <span class="tag-activity">activity</span></td><td class="py-3 px-4 text-center">★</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">date</code></td><td class="py-3 px-4">发布日期</td><td class="py-3 px-4"><code>YYYY-MM-DD</code>，如 <code>2025-07-01</code></td><td class="py-3 px-4 text-center">★</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">title</code></td><td class="py-3 px-4">新闻标题</td><td class="py-3 px-4">任意文字</td><td class="py-3 px-4 text-center">★</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">summary</code></td><td class="py-3 px-4">摘要</td><td class="py-3 px-4">简短描述，1-2句话</td><td class="py-3 px-4 text-center">★</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4"><code style="color:#b8860b;">image</code></td><td class="py-3 px-4">配图</td><td class="py-3 px-4">图片URL</td><td class="py-3 px-4 text-center">可选</td></tr>
+                    <tr><td class="py-3 px-4"><code style="color:#b8860b;">detail</code></td><td class="py-3 px-4">详情正文</td><td class="py-3 px-4">支持HTML</td><td class="py-3 px-4 text-center">可选</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="divider my-6"></div>
+
+        <!-- 新增新闻 -->
+        <h3 class="font-bold text-sm mb-3" style="color:#3d2914;">➕ 新增新闻</h3>
+        <p class="text-sm text-gray-600 mb-3">在数组最前面插入，确保最新新闻排在前面：</p>
+<pre><span class="code-key">const</span> newsData <span class="code-punct">=</span> <span class="code-punct">[</span>
+    <span class="code-comment">// 👇 ===== 在这里插入新新闻 =====</span>
+    <span class="code-punct">{</span>
+        <span class="code-key">type</span><span class="code-punct">:</span> <span class="code-str">'news'</span><span class="code-punct">,</span>
+        <span class="code-key">date</span><span class="code-punct">:</span> <span class="code-str">'2025-07-15'</span><span class="code-punct">,</span>
+        <span class="code-key">title</span><span class="code-punct">:</span> <span class="code-str">'你的新闻标题'</span><span class="code-punct">,</span>
+        <span class="code-key">summary</span><span class="code-punct">:</span> <span class="code-str">'你的新闻摘要'</span><span class="code-punct">,</span>
+        <span class="code-key">image</span><span class="code-punct">:</span> <span class="code-str">'http://static.photos/nature/640x360/42'</span><span class="code-punct">,</span>     <span class="code-comment">// 可选</span>
+        <span class="code-key">detail</span><span class="code-punct">:</span> <span class="code-str">`&lt;p&gt;详情内容&lt;/p&gt;`</span>                                 <span class="code-comment">// 可选</span>
+    <span class="code-punct">}</span><span class="code-punct">,</span>
+    <span class="code-comment">// 👆 ===== 新新闻结束 =====</span>
+
+    <span class="code-punct">{</span> ... <span class="code-punct">}</span><span class="code-punct">,</span>  <span class="code-comment">// 原有新闻</span>
+    <span class="code-punct">...</span>
+<span class="code-punct">]</span><span class="code-punct">;</span></pre>
+
+        <div class="divider my-4"></div>
+
+        <!-- 删除新闻 -->
+        <h3 class="font-bold text-sm mb-3" style="color:#3d2914;">🗑️ 删除新闻</h3>
+        <p class="text-sm text-gray-600 mb-3">删除从 <code>{</code> 到 <code>},</code> 的整段即可。注意逗号处理。</p>
+
+        <div class="divider my-4"></div>
+
+        <!-- 修改新闻 -->
+        <h3 class="font-bold text-sm mb-3" style="color:#3d2914;">✏️ 修改新闻</h3>
+        <p class="text-sm text-gray-600 mb-3">直接修改对应字段的文字内容。注意字符串用英文引号包裹。</p>
+    </section>
+
+    <!-- ==================== 科研荣誉修改 ==================== -->
+    <section id="section-research" class="card p-8 section-anchor">
+        <h2 class="text-xl font-bold mb-6" style="color:#3d2914;">🔬 五、科研荣誉修改</h2>
+
+        <p class="text-sm text-gray-600 mb-4">搜索 <code style="color:#b8860b;">科研赋能</code>，找到科研荣誉区。每个卡片是一个 <code style="color:#b8860b;">stat-card</code>：</p>
+<pre><span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-val">"stat-card fade-in"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;div</span> <span class="code-attr">class=</span><span class="code-val">"w-16 h-16 ..."</span><span class="code-tag">&gt;</span>
+        <span class="code-tag">&lt;i</span> <span class="code-attr">data-lucide=</span><span class="code-val">"<span class="code-html-str" style="color:#f38ba8;">graduation-cap</span>"</span> <span class="code-attr">class=</span><span class="code-val">"w-8 h-8 gold-accent"</span><span class="code-tag">&gt;&lt;/i&gt;</span>  <span class="code-comment">&lt;!-- ← 图标名 --&gt;</span>
+    <span class="code-tag">&lt;/div&gt;</span>
+    <span class="code-tag">&lt;h4</span> <span class="code-attr">class=</span><span class="code-val">"font-bold deep-brown mb-2"</span><span class="code-tag">&gt;</span><span class="code-comment">科研合作</span><span class="code-tag">&lt;/h4&gt;</span>            <span class="code-comment">&lt;!-- ← 标题 --&gt;</span>
+    <span class="code-tag">&lt;p</span> <span class="code-attr">class=</span><span class="code-val">"text-sm text-gray-600"</span><span class="code-tag">&gt;</span><span class="code-comment">与中国热科院深度合作</span><span class="code-tag">&lt;/p&gt;</span>  <span class="code-comment">&lt;!-- ← 描述 --&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span></pre>
+
+        <h3 class="font-bold text-sm mt-6 mb-3" style="color:#3d2914;">可用的 Lucide 图标名</h3>
+        <p class="text-sm text-gray-600 mb-3">将 <code style="color:#b8860b;">data-lucide="xxx"</code> 中的图标名替换即可更换图标：</p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
+            <div class="bg-[#faf8f5] rounded-lg p-3 text-center text-xs">
+                <i data-lucide="graduation-cap" class="w-6 h-6 mx-auto mb-1 gold-accent"></i>
+                <code class="text-gray-600">graduation-cap</code>
+            </div>
+            <div class="bg-[#faf8f5] rounded-lg p-3 text-center text-xs">
+                <i data-lucide="file-badge" class="w-6 h-6 mx-auto mb-1 gold-accent"></i>
+                <code class="text-gray-600">file-badge</code>
+            </div>
+            <div class="bg-[#faf8f5] rounded-lg p-3 text-center text-xs">
+                <i data-lucide="trees" class="w-6 h-6 mx-auto mb-1 gold-accent"></i>
+                <code class="text-gray-600">trees</code>
+            </div>
+            <div class="bg-[#faf8f5] rounded-lg p-3 text-center text-xs">
+                <i data-lucide="shield-check" class="w-6 h-6 mx-auto mb-1 gold-accent"></i>
+                <code class="text-gray-600">shield-check</code>
+            </div>
+            <div class="bg-[#faf8f5] rounded-lg p-3 text-center text-xs">
+                <i data-lucide="award" class="w-6 h-6 mx-auto mb-1 gold-accent"></i>
+                <code class="text-gray-600">award</code>
+            </div>
+            <div class="bg-[#faf8f5] rounded-lg p-3 text-center text-xs">
+                <i data-lucide="flask-conical" class="w-6 h-6 mx-auto mb-1 gold-accent"></i>
+                <code class="text-gray-600">flask-conical</code>
+            </div>
+            <div class="bg-[#faf8f5] rounded-lg p-3 text-center text-xs">
+                <i data-lucide="book-open" class="w-6 h-6 mx-auto mb-1 gold-accent"></i>
+                <code class="text-gray-600">book-open</code>
+            </div>
+            <div class="bg-[#faf8f5] rounded-lg p-3 text-center text-xs">
+                <i data-lucide="beaker" class="w-6 h-6 mx-auto mb-1 gold-accent"></i>
+                <code class="text-gray-600">beaker</code>
+            </div>
+        </div>
+
+        <p class="text-xs text-gray-400 mt-3">更多图标请访问 <a href="https://lucide.dev/icons" target="_blank" class="gold-accent hover:underline">lucide.dev/icons</a> 查找</p>
+    </section>
+
+    <!-- ==================== 页脚信息修改 ==================== -->
+    <section id="section-footer" class="card p-8 section-anchor">
+        <h2 class="text-xl font-bold mb-6" style="color:#3d2914;">📍 六、页脚信息修改</h2>
+
+        <p class="text-sm text-gray-600 mb-4">搜索 <code style="color:#b8860b;">联系方式</code>，找到页脚区域：</p>
+
+        <h3 class="font-bold text-sm mb-3" style="color:#3d2914;">修改联系信息</h3>
+<pre><span class="code-comment">&lt;!-- 公司名称 --&gt;</span>
+<span class="code-tag">&lt;span&gt;</span><span class="code-comment">海南天香文化有限公司</span><span class="code-tag">&lt;/span&gt;</span>
+
+<span class="code-comment">&lt;!-- 邮箱 --&gt;</span>
+<span class="code-tag">&lt;span&gt;</span><span class="code-comment">4689354@qq.com</span><span class="code-tag">&lt;/span&gt;</span>
+
+<span class="code-comment">&lt;!-- 地址 --&gt;</span>
+<span class="code-tag">&lt;span</span> <span class="code-attr">class=</span><span class="code-val">"text-sm"</span><span class="code-tag">&gt;</span><span class="code-comment">海南省海口市龙华区...</span><span class="code-tag">&lt;/span&gt;</span></pre>
+
+        <div class="divider my-6"></div>
+
+        <h3 class="font-bold text-sm mb-3" style="color:#3d2914;">修改咨询弹窗中的信息</h3>
+        <p class="text-sm text-gray-600 mb-3">搜索 <code style="color:#b8860b;">consultModal</code>（咨询弹窗），修改电话、邮箱等：</p>
+<pre><span class="code-comment">&lt;!-- 电话 --&gt;</span>
+<span class="code-tag">&lt;a</span> <span class="code-attr">href=</span><span class="code-val">"<span class="code-html-str">tel:18976396888</span>"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;p</span> <span class="code-attr">class=</span><span class="code-val">"font-bold deep-brown text-lg"</span><span class="code-tag">&gt;</span><span class="code-comment">18976396888</span><span class="code-tag">&lt;/p&gt;</span>    <span class="code-comment">&lt;!-- ← 修改电话号码 --&gt;</span>
+<span class="code-tag">&lt;/a&gt;</span>
+
+<span class="code-comment">&lt;!-- 邮箱 --&gt;</span>
+<span class="code-tag">&lt;a</span> <span class="code-attr">href=</span><span class="code-val">"<span class="code-html-str">mailto:4689354@qq.com</span>"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;p</span> <span class="code-attr">class=</span><span class="code-val">"font-bold deep-brown"</span><span class="code-tag">&gt;</span><span class="code-comment">4689354@qq.com</span><span class="code-tag">&lt;/p&gt;</span>    <span class="code-comment">&lt;!-- ← 修改邮箱 --&gt;</span>
+<span class="code-tag">&lt;/a&gt;</span></pre>
+
+        <div class="divider my-6"></div>
+
+        <h3 class="font-bold text-sm mb-3" style="color:#3d2914;">更换微信二维码图片</h3>
+        <p class="text-sm text-gray-600 mb-3">搜索 <code style="color:#b8860b;">微信公众号</code>（页脚区）或 <code style="color:#b8860b;">微信二维码</code>（咨询弹窗），替换图片地址：</p>
+<pre><span class="code-comment">&lt;!-- 页脚二维码 --&gt;</span>
+<span class="code-tag">&lt;img</span> <span class="code-attr">src=</span><span class="code-val">"<span class="code-html-str">http://static.photos/technology/200x200/66</span>"</span>
+     <span class="code-attr">alt=</span><span class="code-val">"微信公众号"</span> <span class="code-attr">class=</span><span class="code-val">"..."</span><span class="code-tag">&gt;</span>
+
+<span class="code-comment">&lt;!-- 咨询弹窗二维码 --&gt;</span>
+<span class="code-tag">&lt;img</span> <span class="code-attr">src=</span><span class="code-val">"<span class="code-html-str">http://static.photos/technology/200x200/77</span>"</span>
+     <span class="code-attr">alt=</span><span class="code-val">"微信二维码"</span> <span class="code-attr">class=</span><span class="code-val">"..."</span><span class="code-tag">&gt;</span></pre>
+        <p class="text-xs text-gray-400 mt-2">📐 二维码推荐尺寸：200×200，正方形</p>
+    </section>
+
+    <!-- ==================== 图片指南 ==================== -->
+    <section id="section-images" class="card p-8 section-anchor">
+        <h2 class="text-xl font-bold mb-6" style="color:#3d2914;">🖼️ 七、图片来源与替换指南</h2>
+
+        <div class="space-y-5">
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <h4 class="font-bold text-sm mb-2" style="color:#3d2914;">方案A：使用占位图（测试用）</h4>
+                <p class="text-xs text-gray-500 mb-3">格式：<code style="color:#b8860b;">http://static.photos/[分类]/[尺寸]/[种子号]</code></p>
+                <div class="text-xs text-gray-600 space-y-1">
+                    <p>• 分类：nature / office / people / technology / food / travel / minimal / craft / wood ...</p>
+                    <p>• 尺寸：200x200 / 320x240 / <strong>400x300</strong> / <strong>640x360</strong> / 1024x576 / 1200x630</p>
+                    <p>• 种子号：任意数字(1-999)，相同数字 = 相同图片</p>
+                </div>
+                <div class="mt-3 text-xs space-y-1">
+                    <p><code style="color:#b8860b;">http://static.photos/nature/640x360/42</code></p>
+                    <p><code style="color:#b8860b;">http://static.photos/minimal/400x300/101</code></p>
+                    <p><code style="color:#b8860b;">http://static.photos/craft/640x360/33</code></p>
+                </div>
+            </div>
+
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <h4 class="font-bold text-sm mb-2" style="color:#3d2914;">方案B：使用本地图片（推荐上线方式）</h4>
+                <p class="text-xs text-gray-600 mb-3">将图片文件放在网站目录中，使用相对路径引用：</p>
+<pre><span class="code-comment">网站目录结构：</span>
+<span class="code-key">index.html</span>
+<span class="code-key">images/</span>
+    <span class="code-key">series/</span>        <span class="code-comment">← 产品系列卡片背景图</span>
+        <span class="code-str">aloeswood.jpg</span>
+        <span class="code-str">rosewood.jpg</span>
+    <span class="code-key">products/</span>      <span class="code-comment">← 子产品图片</span>
+        <span class="code-str">bracelet-01.jpg</span>
+        <span class="code-str">oil-01.jpg</span>
+    <span class="code-key">story/</span>         <span class="code-comment">← 品牌故事配图</span>
+        <span class="code-str">origin.jpg</span>
+    <span class="code-key">news/</span>          <span class="code-comment">← 新闻配图</span>
+        <span class="code-str">news-01.jpg</span>
+    <span class="code-key">qrcode/</span>        <span class="code-comment">← 二维码图片</span>
+        <span class="code-str">wechat.jpg</span></pre>
+
+                <p class="text-xs text-gray-600 mt-3">引用时使用相对路径：</p>
+                <div class="text-xs space-y-1 mt-2">
+                    <p><code style="color:#b8860b;">images/series/aloeswood.jpg</code> — 产品系列背景图</p>
+                    <p><code style="color:#b8860b;">images/products/bracelet-01.jpg</code> — 子产品图</p>
+                    <p><code style="color:#b8860b;">images/qrcode/wechat.jpg</code> — 微信二维码</p>
+                </div>
+            </div>
+
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <h4 class="font-bold text-sm mb-2" style="color:#3d2914;">方案C：使用图床/CDN（适合无服务器）</h4>
+                <p class="text-xs text-gray-600 mb-2">将图片上传到图床服务，获取完整URL后替换：</p>
+                <div class="text-xs text-gray-600 space-y-1">
+                    <p>• 常用图床：七牛云、阿里OSS、腾讯COS、又拍云等</p>
+                    <p>• 上传后获取完整URL，如：<code style="color:#b8860b;">https://cdn.example.com/images/product01.jpg</code></p>
+                    <p>• 直接替换到代码中的图片URL位置即可</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider my-6"></div>
+
+        <h3 class="font-bold text-sm mb-3" style="color:#3d2914;">各区域图片尺寸参考</h3>
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm border-collapse">
+                <thead>
+                    <tr class="border-b-2 border-[#b8860b]/20">
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">图片位置</th>
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">推荐尺寸</th>
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">比例</th>
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">格式</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600">
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4">产品系列卡片</td><td class="py-3 px-4">640×360 或 1200×630</td><td class="py-3 px-4">16:9</td><td class="py-3 px-4">JPG / WebP</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4">子产品图片</td><td class="py-3 px-4">400×300</td><td class="py-3 px-4">4:3</td><td class="py-3 px-4">JPG / WebP</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4">品牌故事配图</td><td class="py-3 px-4">640×360</td><td class="py-3 px-4">16:9</td><td class="py-3 px-4">JPG / WebP</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4">新闻配图</td><td class="py-3 px-4">640×360</td><td class="py-3 px-4">16:9</td><td class="py-3 px-4">JPG / WebP</td></tr>
+                    <tr><td class="py-3 px-4">二维码</td><td class="py-3 px-4">200×200</td><td class="py-3 px-4">1:1</td><td class="py-3 px-4">PNG</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ==================== 常见问题 ==================== -->
+    <section id="section-faq" class="card p-8 section-anchor">
+        <h2 class="text-xl font-bold mb-6" style="color:#3d2914;">❓ 八、常见问题</h2>
+
+        <div class="space-y-4">
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <p class="font-bold text-sm mb-2" style="color:#3d2914;">Q：修改后网页没有变化？</p>
+                <p class="text-sm text-gray-600">A：按 <kbd class="bg-white px-2 py-0.5 rounded border text-xs">Ctrl + F5</kbd> 强制刷新（清缓存），或用浏览器无痕模式打开。</p>
+            </div>
+
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <p class="font-bold text-sm mb-2" style="color:#3d2914;">Q：点击产品卡片弹窗没有内容？</p>
+                <p class="text-sm text-gray-600">A：检查 HTML 中 <code>onclick="openModal('xxx')"</code> 的参数 xxx 是否与 JS <code>products</code> 对象中的键名完全一致（区分大小写）。</p>
+            </div>
+
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <p class="font-bold text-sm mb-2" style="color:#3d2914;">Q：添加新产品系列后卡片排列不对？</p>
+                <p class="text-sm text-gray-600">A：当前使用4列网格布局（<code>lg:grid-cols-4</code>）。如果产品系列不是4个，可以修改这个数字：<br>
+                2个系列 → <code>lg:grid-cols-2</code><br>
+                3个系列 → <code>lg:grid-cols-3</code><br>
+                5个系列 → <code>lg:grid-cols-5</code> 或保持 <code>lg:grid-cols-4</code> 自动换行</p>
+            </div>
+
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <p class="font-bold text-sm mb-2" style="color:#3d2914;">Q：图片显示不出来？</p>
+                <p class="text-sm text-gray-600">A：① 检查图片URL是否正确，用浏览器直接打开URL测试；<br>② 确保URL用英文引号包裹，没有多余空格；<br>③ 如果是本地图片，检查文件路径和大小写。</p>
+            </div>
+
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <p class="font-bold text-sm mb-2" style="color:#3d2914;">Q：不小心改坏了怎么办？</p>
+                <p class="text-sm text-gray-600">A：修改前建议先备份 <code>index.html</code> 文件。改坏了用备份恢复即可。也可以用 VS Code 的 <kbd class="bg-white px-1.5 py-0.5 rounded border text-xs">Ctrl + Z</kbd> 撤销功能。</p>
+            </div>
+
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <p class="font-bold text-sm mb-2" style="color:#3d2914;">Q：日期格式写错了会怎样？</p>
+                <p class="text-sm text-gray-600">A：新闻列表中日期显示会异常。必须使用 <code style="color:#b8860b;">YYYY-MM-DD</code> 格式，如 <code>2025-07-15</code>。</p>
+            </div>
+
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <p class="font-bold text-sm mb-2" style="color:#3d2914;">Q：新闻列表显示几条？</p>
+                <p class="text-sm text-gray-600">A：列表默认显示最新5条。点击"查看更多"可看全部。数据量不限。</p>
+            </div>
+
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <p class="font-bold text-sm mb-2" style="color:#3d2914;">Q：代码中引号用了中文的会怎样？</p>
+                <p class="text-sm text-gray-600">A：会导致 JavaScript 报错，整个页面功能可能失效！请务必使用<strong>英文半角引号</strong> <code>'...'</code> 或 <code>"..."</code>，不要使用 <code>'…'</code> 或 <code>"…"</code>。</p>
+            </div>
+
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <p class="font-bold text-sm mb-2" style="color:#3d2914;">Q：如何修改导航栏菜单项？</p>
+                <p class="text-sm text-gray-600">A：搜索 <code style="color:#b8860b;">首页</code>，找到导航区域。桌面导航和移动端菜单是两套，需要同时修改。导航链接指向页面内锚点（如 <code>#products</code>），对应各区域的 <code>id</code> 属性。</p>
+            </div>
+
+            <div class="bg-[#faf8f5] rounded-xl p-5">
+                <p class="font-bold text-sm mb-2" style="color:#3d2914;">Q：如何修改网站图标（Favicon）？</p>
+                <p class="text-sm text-gray-600">A：在 <code>&lt;head&gt;</code> 中找到 <code>&lt;link rel="icon" ...&gt;</code>，替换 <code>href</code> 为你的图标文件路径即可。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 快速操作清单 ==================== -->
+    <section class="card p-8 section-anchor">
+        <h2 class="text-xl font-bold mb-6" style="color:#3d2914;">✅ 快速操作清单</h2>
+        <p class="text-sm text-gray-600 mb-5">常用修改操作速查表：</p>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm border-collapse">
+                <thead>
+                    <tr class="border-b-2 border-[#b8860b]/20">
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">想做什么</th>
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">搜索关键词</th>
+                        <th class="text-left py-3 px-4 font-bold" style="color:#3d2914;">修改内容</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600">
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4">改主标题</td><td class="py-3 px-4"><code style="color:#b8860b;">一缕天香</code></td><td class="py-3 px-4">HTML 文字</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4">改产品卡片图片</td><td class="py-3 px-4"><code style="color:#b8860b;">核心产品系列</code></td><td class="py-3 px-4">HTML img src</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4">改产品详情数据</td><td class="py-3 px-4"><code style="color:#b8860b;">const products</code></td><td class="py-3 px-4">JS 对象字段</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4">改品牌简介</td><td class="py-3 px-4"><code style="color:#b8860b;">品牌简介</code></td><td class="py-3 px-4">HTML 文字</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4">改品牌故事</td><td class="py-3 px-4"><code style="color:#b8860b;">brandStoryData</code></td><td class="py-3 px-4">JS 对象字段</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4">改新闻</td><td class="py-3 px-4"><code style="color:#b8860b;">newsData</code></td><td class="py-3 px-4">JS 数组</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4">改电话号码</td><td class="py-3 px-4"><code style="color:#b8860b;">18976396888</code></td><td class="py-3 px-4">HTML 文字 + href</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4">改邮箱</td><td class="py-3 px-4"><code style="color:#b8860b;">4689354@qq.com</code></td><td class="py-3 px-4">HTML 文字 + href</td></tr>
+                    <tr class="border-b border-gray-100"><td class="py-3 px-4">改二维码</td><td class="py-3 px-4"><code style="color:#b8860b;">微信公众号</code></td><td class="py-3 px-4">HTML img src</td></tr>
+                    <tr><td class="py-3 px-4">改科研荣誉</td><td class="py-3 px-4"><code style="color:#b8860b;">科研赋能</code></td><td class="py-3 px-4">HTML 文字 + 图标</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 底部提示 -->
+    <div class="text-center py-8 text-gray-400 text-xs space-y-2">
+        <p>海南天香文化有限公司 · 网站内容修改教程</p>
+        <p>保存此文件至本地即可随时查阅 | <a href="index.html" style="color:#b8860b;">返回首页 →</a></p>
+    </div>
+
+</main>
+
+<!-- 回到顶部按钮 -->
+<div class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i data-lucide="chevron-up" class="w-5 h-5"></i>
+</div>
+
+<script>
+    // 初始化 Lucide 图标
+    lucide.createIcons();
+
+    // 回到顶部按钮显示/隐藏
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    // 侧边导航高亮
+    const sections = document.querySelectorAll('.section-anchor');
+    const sideLinks = document.querySelectorAll('#sideNav .toc-link');
+
+    function updateSideNav() {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 120;
+            if (window.scrollY >= sectionTop) {
+                current = section.id;
+            }
+        });
+
+        sideLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === '#' + current) {
+                link.style.color = '#b8860b';
+                link.style.fontWeight = '700';
+                link.style.background = 'rgba(184,134,11,0.06)';
+                link.style.borderColor = 'rgba(184,134,11,0.15)';
+            } else {
+                link.style.color = '#999';
+                link.style.fontWeight = '500';
+                link.style.background = 'transparent';
+                link.style.borderColor = 'transparent';
+            }
+        });
+    }
+
+    window.addEventListener('scroll', updateSideNav);
+    updateSideNav();
+</script>
+
+</body>
+</html>

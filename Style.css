@@ -1,0 +1,55 @@
+/* ===== 海南天香文化有限公司 - 共享样式 ===== */
+
+/* 品牌色彩变量 */
+:root {
+    --gold: #b8860b;
+    --gold-light: #d4a574;
+    --deep-brown: #3d2914;
+    --cream: #faf8f5;
+    --light-cream: #f5f2ed;
+}
+
+/* 基础排版 */
+body {
+    font-family: 'Noto Serif SC', serif;
+    background-color: var(--cream);
+    color: #333;
+}
+
+/* 通用工具类 */
+.gold-accent { color: var(--gold); }
+.gold-bg { background-color: var(--gold); }
+.deep-brown { color: var(--deep-brown); }
+.bg-deep-brown { background-color: var(--deep-brown); }
+.bg-cream { background-color: var(--cream); }
+.bg-light-cream { background-color: var(--light-cream); }
+
+/* 选中文字样式 */
+::selection {
+    background: rgba(184, 134, 11, 0.2);
+    color: var(--deep-brown);
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--cream);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--gold-light);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+}
+
+/* 隐藏水平滚动条 */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}

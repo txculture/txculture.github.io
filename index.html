@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海南天香文化有限公司 - 一缕天香，匠心传承</title>
+    <link rel="icon" type="image/png" href="https://bucket.deepsite.design/logo.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500;600;700;900&display=swap');
+        
+        * { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #faf8f5;
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background-color: rgba(255, 255, 255, 0.92);
+        }
+        
+        .gold-accent { color: #b8860b; }
+        .gold-bg { background-color: #b8860b; }
+        .deep-brown { color: #3d2914; }
+        .bg-deep-brown { background-color: #3d2914; }
+        .bg-cream { background-color: #faf8f5; }
+        .bg-light-cream { background-color: #f5f2ed; }
+        .bg-product { background: linear-gradient(135deg, #f0ebe2 0%, #e6ddd0 100%); }
+        .border-gold { border-color: #b8860b; }
+        
+        .hover-scale {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hover-scale:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(61, 41, 20, 0.15);
+        }
+        
+        .product-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f9f7f4 100%);
+            box-shadow: 0 4px 20px rgba(61, 41, 20, 0.08);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .product-card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card-footer {
+            margin-top: auto;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            padding: 0;
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
+            border-radius: 20px;
+            overflow: hidden;
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+        .modal.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            color: #3d2914;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        .close:hover {
+            background: #b8860b;
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 8px 0;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #b8860b;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .story-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .story-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .story-section:target {
+            scroll-margin-top: 100px;
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        .hero-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b8860b' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #b8860b 0%, #d4a574 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(184, 134, 11, 0.3);
+        }
+        
+        .btn-outline {
+            border: 2px solid #b8860b;
+            color: #b8860b;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            background: #b8860b;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            background: rgba(255,255,255,0.9);
+            transform: translateY(-5px);
+        }
+        
+        .product-grid-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .product-grid-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .product-grid-item img {
+            transition: transform 0.5s ease;
+        }
+        .product-grid-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* ===== Banner Styles ===== */
+        .banner-hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 320px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: height 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .banner-hero.shrink {
+            height: 75vh;
+        }
+        .banner-bg-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(160deg, #0d0805 0%, #1a0f07 25%, #2d1a0d 55%, #3d2914 80%, #1a0f07 100%);
+        }
+        .banner-glow-1 {
+            position: absolute;
+            top: -15%;
+            right: -8%;
+            width: 55vw;
+            height: 55vw;
+            max-width: 700px;
+            max-height: 700px;
+            background: radial-gradient(circle, rgba(184,134,11,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: glowPulse 6s ease-in-out infinite;
+        }
+        .banner-glow-2 {
+            position: absolute;
+            bottom: -20%;
+            left: -12%;
+            width: 45vw;
+            height: 45vw;
+            max-width: 600px;
+            max-height: 600px;
+            background: radial-gradient(circle, rgba(184,134,11,0.07) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: glowPulse 8s ease-in-out infinite reverse;
+        }
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.08); }
+        }
+        .banner-title-line {
+            opacity: 0;
+            transform: translateY(40px);
+            animation: bannerLineIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .banner-title-line-1 { animation-delay: 0.5s; }
+        @keyframes bannerLineIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .banner-decor {
+            opacity: 0;
+            animation: decorIn 1s ease forwards;
+        }
+        .banner-decor-top { animation-delay: 0.2s; }
+        .banner-decor-bottom { animation-delay: 1.8s; }
+        .banner-subtitle { animation-delay: 2.2s; }
+        @keyframes decorIn {
+            to { opacity: 1; }
+        }
+        .banner-particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(184, 134, 11, 0.5);
+            pointer-events: none;
+            animation: particleFloat linear infinite;
+        }
+        @keyframes particleFloat {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-50vh) translateX(20px); opacity: 0; }
+        }
+        .banner-title-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+        .banner-title-row .title-text {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            white-space: nowrap;
+        }
+        .banner-title-row .title-divider {
+            width: 1px;
+            height: clamp(1.5rem, 3.5vw, 3rem);
+            background: linear-gradient(to bottom, transparent, rgba(184,134,11,0.5), transparent);
+            margin: 0 clamp(0.8rem, 2vw, 2rem);
+            flex-shrink: 0;
+        }
+        @media (max-width: 480px) {
+            .banner-title-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.25rem;
+            }
+            .banner-title-row .title-divider {
+                width: clamp(2rem, 10vw, 4rem);
+                height: 1px;
+                background: linear-gradient(to right, transparent, rgba(184,134,11,0.5), transparent);
+                margin: 0.5rem 0;
+            }
+        }
+
+        .story-link-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 14px;
+            border: 1px solid rgba(184,134,11,0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .story-link-item:hover {
+            background: rgba(255,255,255,0.92);
+            border-color: rgba(184,134,11,0.35);
+            transform: translateX(10px);
+            box-shadow: 0 8px 30px rgba(184,134,11,0.12);
+        }
+        .story-link-number {
+            color: #b8860b;
+            font-size: 13px;
+            font-weight: 700;
+            opacity: 0.5;
+            min-width: 24px;
+        }
+        .story-link-text {
+            color: #3d2914;
+            font-size: 18px;
+            font-weight: 700;
+            min-width: 80px;
+        }
+        .story-link-desc {
+            color: #888;
+            font-size: 13px;
+            flex: 1;
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .story-link-desc { display: inline; }
+        }
+        .story-link-arrow {
+            color: #b8860b;
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: all 0.3s ease;
+        }
+        .story-link-item:hover .story-link-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .story-link-item:hover .story-link-number {
+            opacity: 1;
+        }
+
+        /* News tab styles */
+        .news-tab {
+            color: #999;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            cursor: pointer;
+        }
+        .news-tab:hover {
+            color: #b8860b;
+        }
+        .news-tab.active {
+            color: #b8860b;
+            font-weight: 700;
+            border-bottom-color: #b8860b;
+        }
+        .news-item {
+            display: flex;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(184,134,11,0.06);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        .news-item:hover {
+            transform: translateX(4px);
+        }
+        .news-item:hover .news-item-title {
+            color: #b8860b;
+        }
+        .news-date-box {
+            flex-shrink: 0;
+            width: 50px;
+            text-align: center;
+            border-right: 1px solid rgba(184,134,11,0.1);
+            padding-right: 14px;
+        }
+        .news-date-day {
+            font-size: 22px;
+            font-weight: 700;
+            color: #3d2914;
+            line-height: 1.1;
+        }
+        .news-date-month {
+            font-size: 11px;
+            color: #b8860b;
+            margin-top: 2px;
+        }
+        .news-item-body {
+            flex: 1;
+            min-width: 0;
+        }
+        .news-tag {
+            display: inline-block;
+            font-size: 10px;
+            padding: 1px 8px;
+            border-radius: 10px;
+            font-weight: 500;
+            line-height: 18px;
+        }
+        .news-tag-news {
+            background: rgba(184,134,11,0.1);
+            color: #b8860b;
+        }
+        .news-tag-activity {
+            background: rgba(59,130,246,0.1);
+            color: #3b82f6;
+        }
+        .news-item-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #3d2914;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: color 0.3s ease;
+        }
+        .news-item-summary {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* News list with date box - title only */
+        .news-list-item {
+            display: flex;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(184,134,11,0.06);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .news-list-item:last-child {
+            border-bottom: none;
+        }
+        .news-list-item:hover {
+            transform: translateX(4px);
+        }
+        .news-list-item:hover .news-list-title {
+            color: #b8860b;
+        }
+        .news-list-item:hover .news-list-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .news-list-body {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .news-list-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #3d2914;
+            line-height: 1.5;
+            flex: 1;
+            transition: color 0.3s ease;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .news-list-arrow {
+            color: #b8860b;
+            opacity: 0;
+            transform: translateX(-6px);
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        /* Brand story hero */
+        .brand-hero-banner {
+            background: linear-gradient(135deg, rgba(61,41,20,0.85), rgba(61,41,20,0.6)),
+                        url('http://static.photos/nature/1200x630/42') center/cover no-repeat;
+        }
+
+        /* Sticky story nav active state */
+        .story-nav-link {
+            transition: all 0.3s ease;
+        }
+        .story-nav-link.active-nav {
+            background-color: #b8860b !important;
+            color: white !important;
+        }
+    </style>
+</head>
+<body class="bg-cream">
+    <!-- 导航栏 -->
+    <nav class="nav-blur fixed w-full top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center gap-3">
+                    <div>
+                        <h1 class="text-lg font-bold deep-brown">海南天香文化有限公司</h1>
+                        <p class="text-xs gold-accent">TianXiang Culture Co., Ltd.</p>
+                    </div>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link deep-brown hover:gold-accent transition text-sm">首页</a>
+                    <a href="#products" class="nav-link deep-brown hover:gold-accent transition text-sm">产品中心</a>
+                    <a href="#brandstory" class="nav-link deep-brown hover:gold-accent transition text-sm">品牌故事</a>
+                    <a href="#research" class="nav-link deep-brown hover:gold-accent transition text-sm">科研发展</a>
+                    <a href="#contact" class="nav-link deep-brown hover:gold-accent transition text-sm">关于我们</a>
+                    <button onclick="openConsult()" class="btn-primary text-white px-6 py-2 rounded-full text-sm font-medium">
+                        立即咨询
+                    </button>
+                </div>
+                
+                <!-- 移动端菜单按钮 -->
+                <button id="mobileMenuBtn" class="md:hidden p-2 deep-brown">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-72 h-full bg-white shadow-2xl md:hidden z-50">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-8">
+                    <span class="font-bold deep-brown">菜单</span>
+                    <button id="closeMobileMenu" class="p-2">
+                        <i data-lucide="x" class="w-6 h-6 deep-brown"></i>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <a href="#home" class="block py-3 deep-brown border-b border-gray-100">首页</a>
+                    <a href="#products" class="block py-3 deep-brown border-b border-gray-100">产品中心</a>
+                    <a href="#brandstory" class="block py-3 deep-brown border-b border-gray-100">品牌故事</a>
+                    <a href="#research" class="block py-3 deep-brown border-b border-gray-100">科研发展</a>
+                    <a href="#contact" class="block py-3 deep-brown border-b border-gray-100">关于我们</a>
+                    <button onclick="openConsult()" class="btn-primary w-full text-white py-3 rounded-lg mt-4">
+                        立即咨询
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Banner -->
+    <section id="home" class="banner-hero">
+        <div class="banner-bg-gradient"></div>
+        <div class="hero-pattern opacity-20" style="position:absolute;inset:0;z-index:1;"></div>
+        
+        <div class="banner-glow-1"></div>
+        <div class="banner-glow-2"></div>
+        
+        <!-- Floating particles -->
+        <div class="banner-particle" style="left:10%;bottom:0;width:3px;height:3px;animation-duration:12s;animation-delay:0s;"></div>
+        <div class="banner-particle" style="left:25%;bottom:0;width:2px;height:2px;animation-duration:15s;animation-delay:2s;"></div>
+        <div class="banner-particle" style="left:40%;bottom:0;width:4px;height:4px;animation-duration:18s;animation-delay:4s;"></div>
+        <div class="banner-particle" style="left:55%;bottom:0;width:2px;height:2px;animation-duration:14s;animation-delay:1s;"></div>
+        <div class="banner-particle" style="left:70%;bottom:0;width:3px;height:3px;animation-duration:16s;animation-delay:3s;"></div>
+        <div class="banner-particle" style="left:85%;bottom:0;width:2px;height:2px;animation-duration:13s;animation-delay:5s;"></div>
+        <div class="banner-particle" style="left:15%;bottom:0;width:3px;height:3px;animation-duration:17s;animation-delay:7s;"></div>
+        <div class="banner-particle" style="left:60%;bottom:0;width:4px;height:4px;animation-duration:11s;animation-delay:6s;"></div>
+        <div class="banner-particle" style="left:35%;bottom:0;width:2px;height:2px;animation-duration:19s;animation-delay:8s;"></div>
+        <div class="banner-particle" style="left:80%;bottom:0;width:3px;height:3px;animation-duration:14s;animation-delay:9s;"></div>
+        <div class="banner-particle" style="left:5%;bottom:0;width:2px;height:2px;animation-duration:16s;animation-delay:10s;"></div>
+        <div class="banner-particle" style="left:48%;bottom:0;width:3px;height:3px;animation-duration:20s;animation-delay:3s;"></div>
+
+        <!-- Content -->
+        <div class="relative z-10 text-center px-4">
+            <div class="banner-decor banner-decor-top flex items-center justify-center gap-4 mb-6">
+                <div class="w-16 md:w-28 h-px bg-gradient-to-r from-transparent to-[#b8860b]/50"></div>
+                <i data-lucide="sparkles" class="w-4 h-4 text-[#b8860b]/60"></i>
+                <div class="w-16 md:w-28 h-px bg-gradient-to-l from-transparent to-[#b8860b]/50"></div>
+            </div>
+            
+            <h2 class="banner-title-line banner-title-line-1 leading-tight">
+                <div class="banner-title-row">
+                    <span class="title-text text-white">一缕天香</span>
+                    <span class="title-divider"></span>
+                    <span class="title-text gold-accent">匠心传承</span>
+                </div>
+            </h2>
+            
+            <div class="banner-decor banner-decor-bottom flex items-center justify-center gap-4 mt-6 mb-4">
+                <div class="w-20 md:w-36 h-px bg-gradient-to-r from-transparent to-[#b8860b]/50"></div>
+                <div class="w-1.5 h-1.5 bg-[#b8860b]/70 rounded-full"></div>
+                <div class="w-20 md:w-36 h-px bg-gradient-to-l from-transparent to-[#b8860b]/50"></div>
+            </div>
+            
+            <p class="banner-decor banner-subtitle text-white/35 text-xs md:text-sm tracking-[0.6em] uppercase font-light">Hainan Tianxiang Culture Co., Ltd.</p>
+        </div>
+    </section>
+
+    <!-- 核心产品展示 -->
+    <section id="products" class="bg-product py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h3 class="text-3xl md:text-4xl font-bold deep-brown mb-2">核心产品系列</h3>
+                <span class="gold-accent text-sm font-medium tracking-wider uppercase">Core Products</span>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">源于自然，匠心手作。每一件产品都承载着海南独特的香文化精髓。</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
+                <!-- 沉香系列 -->
+                <div class="fade-in">
+                    <div class="group relative h-[460px] rounded-2xl overflow-hidden cursor-pointer shadow-[0_2px_20px_rgba(61,41,20,0.06)] hover:shadow-[0_24px_50px_rgba(61,41,20,0.18)] transition-all duration-500 hover:-translate-y-2" onclick="openModal('aloeswood')">
+                        <img src="http://static.photos/minimal/640x360/88" alt="沉香系列" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d0805]/90 via-[#0d0805]/30 to-[#0d0805]/5 group-hover:via-[#0d0805]/50 transition-all duration-500"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-7 z-10">
+                            <h4 class="text-white text-[22px] font-bold mb-2.5 tracking-wider">沉香系列</h4>
+                            <div class="w-8 h-[2px] bg-[#b8860b] mb-3 transition-all duration-500 group-hover:w-16"></div>
+                            <p class="text-white/50 text-[13px] leading-relaxed">沉香手串、熏香、精油、沉香酒<br class="hidden sm:block">源自1.8万亩种植基地</p>
+                            <div class="mt-5 inline-flex items-center gap-2 bg-[#b8860b] text-white text-sm font-medium px-5 py-2.5 rounded-full opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 shadow-lg shadow-[#b8860b]/25">
+                                <span>探索系列</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-[#b8860b] via-[#d4a574] to-transparent w-0 group-hover:w-full transition-all duration-700 z-10"></div>
+                    </div>
+                </div>
+
+                <!-- 花梨木系列 -->
+                <div class="fade-in">
+                    <div class="group relative h-[460px] rounded-2xl overflow-hidden cursor-pointer shadow-[0_2px_20px_rgba(61,41,20,0.06)] hover:shadow-[0_24px_50px_rgba(61,41,20,0.18)] transition-all duration-500 hover:-translate-y-2" onclick="openModal('rosewood')">
+                        <img src="http://static.photos/wood/640x360/55" alt="花梨木系列" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d0805]/90 via-[#0d0805]/30 to-[#0d0805]/5 group-hover:via-[#0d0805]/50 transition-all duration-500"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-7 z-10">
+                            <h4 class="text-white text-[22px] font-bold mb-2.5 tracking-wider">花梨木系列</h4>
+                            <div class="w-8 h-[2px] bg-[#b8860b] mb-3 transition-all duration-500 group-hover:w-16"></div>
+                            <p class="text-white/50 text-[13px] leading-relaxed">花梨手串、雕刻摆件、精油<br class="hidden sm:block">海南黄花梨的珍贵馈赠</p>
+                            <div class="mt-5 inline-flex items-center gap-2 bg-[#b8860b] text-white text-sm font-medium px-5 py-2.5 rounded-full opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 shadow-lg shadow-[#b8860b]/25">
+                                <span>探索系列</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-[#b8860b] via-[#d4a574] to-transparent w-0 group-hover:w-full transition-all duration-700 z-10"></div>
+                    </div>
+                </div>
+
+                <!-- 降真香系列 -->
+                <div class="fade-in">
+                    <div class="group relative h-[460px] rounded-2xl overflow-hidden cursor-pointer shadow-[0_2px_20px_rgba(61,41,20,0.06)] hover:shadow-[0_24px_50px_rgba(61,41,20,0.18)] transition-all duration-500 hover:-translate-y-2" onclick="openModal('jiangzhen')">
+                        <img src="http://static.photos/minimal/640x360/77" alt="降真香系列" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d0805]/90 via-[#0d0805]/30 to-[#0d0805]/5 group-hover:via-[#0d0805]/50 transition-all duration-500"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-7 z-10">
+                            <h4 class="text-white text-[22px] font-bold mb-2.5 tracking-wider">降真香系列</h4>
+                            <div class="w-8 h-[2px] bg-[#b8860b] mb-3 transition-all duration-500 group-hover:w-16"></div>
+                            <p class="text-white/50 text-[13px] leading-relaxed">降真香手串、熏香、精油、碎料<br class="hidden sm:block">道家养生首选</p>
+                            <div class="mt-5 inline-flex items-center gap-2 bg-[#b8860b] text-white text-sm font-medium px-5 py-2.5 rounded-full opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 shadow-lg shadow-[#b8860b]/25">
+                                <span>探索系列</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-[#b8860b] via-[#d4a574] to-transparent w-0 group-hover:w-full transition-all duration-700 z-10"></div>
+                    </div>
+                </div>
+
+                <!-- 酥香保健酒 -->
+                <div class="fade-in">
+                    <div class="group relative h-[460px] rounded-2xl overflow-hidden cursor-pointer shadow-[0_2px_20px_rgba(61,41,20,0.06)] hover:shadow-[0_24px_50px_rgba(61,41,20,0.18)] transition-all duration-500 hover:-translate-y-2" onclick="openModal('healthwine')">
+                        <img src="http://static.photos/minimal/640x360/99" alt="酥香保健酒" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0d0805]/90 via-[#0d0805]/30 to-[#0d0805]/5 group-hover:via-[#0d0805]/50 transition-all duration-500"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-7 z-10">
+                            <h4 class="text-white text-[22px] font-bold mb-2.5 tracking-wider">保健酒系列</h4>
+                            <div class="w-8 h-[2px] bg-[#b8860b] mb-3 transition-all duration-500 group-hover:w-16"></div>
+                            <p class="text-white/50 text-[13px] leading-relaxed">酥香保健酒、草本养生酒<br class="hidden sm:block">国家发明专利配方</p>
+                            <div class="mt-5 inline-flex items-center gap-2 bg-[#b8860b] text-white text-sm font-medium px-5 py-2.5 rounded-full opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 shadow-lg shadow-[#b8860b]/25">
+                                <span>探索系列</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-[#b8860b] via-[#d4a574] to-transparent w-0 group-hover:w-full transition-all duration-700 z-10"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 品牌故事 -->
+    <section id="brandstory" class="py-20 lg:py-28" style="background: linear-gradient(135deg, #f7f3ed 0%, #f0ebe2 50%, #f5f0e8 100%);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- 标题 -->
+            <div class="text-center mb-14 fade-in">
+                <h3 class="text-3xl md:text-4xl font-bold deep-brown mb-3">品牌故事</h3>
+                <span class="gold-accent text-sm font-medium tracking-wider uppercase">Brand Story</span>
+                <p class="text-gray-600 max-w-xl mx-auto">三十余年匠心传承，一缕天香飘万里</p>
+            </div>
+
+            <!-- 左右布局 -->
+            <div class="flex flex-col lg:flex-row gap-10 lg:gap-12 fade-in items-stretch">
+                <!-- 左侧：品牌简介 -->
+                <div class="lg:w-5/12 flex">
+                    <div class="relative bg-white/70 backdrop-blur-sm rounded-2xl border border-white/80 shadow-sm w-full overflow-hidden flex flex-col">
+                        <!-- 顶部装饰渐变条 -->
+                        <div class="h-1.5 bg-gradient-to-r from-[#b8860b] via-[#d4a574] to-[#b8860b]"></div>
+                        <!-- 角落装饰水印 -->
+                        <div class="absolute top-8 right-8 opacity-[0.04] pointer-events-none">
+                            <i data-lucide="flame" class="w-24 h-24"></i>
+                        </div>
+
+                        <div class="p-8 md:p-10 flex flex-col flex-1">
+                            <!-- 标题装饰头 -->
+                            <div class="flex items-center gap-3 mb-7">
+                                <div class="w-10 h-10 rounded-xl bg-[#b8860b]/10 flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="scroll-text" class="w-5 h-5 gold-accent"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold deep-brown text-lg leading-tight">品牌简介</h4>
+                                    <div class="w-8 h-0.5 bg-gradient-to-r from-[#b8860b] to-transparent mt-1.5"></div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-5 text-gray-700 leading-relaxed text-sm md:text-[15px] relative z-10">
+                                <p>
+                                    <span class="inline-flex items-center justify-center bg-[#b8860b]/[0.08] gold-accent font-bold px-1.5 py-0.5 rounded text-sm">1992</span>年，海南天香文化有限公司在这片热带宝地上应运而生。创始人深知沉香、花梨木等珍稀名木的珍贵价值，怀揣着将海南香文化发扬光大的初心，开启了匠心之旅。
+                                </p>
+                                <p>
+                                    公司拥有<span class="inline-flex items-center justify-center bg-[#b8860b]/[0.08] gold-accent font-bold px-1.5 py-0.5 rounded text-sm">1.8万亩</span>沉香生态种植基地，坚持不使用化学农药和化肥，采用传统人工管护方式。从选材到成品，每一道工序都倾注匠人心血，与中国热带农业科学院深度合作，已获得<span class="inline-flex items-center justify-center bg-[#b8860b]/[0.08] gold-accent font-bold px-1.5 py-0.5 rounded text-sm">3项</span>国内外专利。
+                                </p>
+                                <p>
+                                    借力海南自由贸易港建设，天香文化正积极布局国际市场，让海南独特的香文化飘向全球，让世界感受到东方香道的独特魅力。
+                                </p>
+                            </div>
+
+                            <!-- 底部品牌签名 -->
+                            <div class="mt-auto pt-6 border-t border-[#b8860b]/10 relative z-10">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-[#b8860b] to-[#d4a574] flex items-center justify-center flex-shrink-0">
+                                        <i data-lucide="leaf" class="w-4 h-4 text-white"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold deep-brown">海南天香文化有限公司</p>
+                                        <p class="text-xs text-gray-400">始于1992 · 匠心传承三十余载</p>
+                                    </div>
+                                </div>
+                                <p class="mt-3 text-xs text-gray-400 italic leading-relaxed">"一缕天香，匠心传承 —— 让世界感受东方香道的独特魅力"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧：新闻动态 -->
+                <div class="lg:w-7/12 flex">
+                    <div class="bg-white/70 backdrop-blur-sm rounded-2xl border border-white/80 shadow-sm p-8 md:p-10 w-full flex flex-col">
+                        <div class="flex items-center justify-between mb-5">
+                            <h4 class="text-lg font-bold deep-brown">新闻动态</h4>
+                            <button onclick="openNewsMore()" class="text-xs gold-accent hover:underline flex items-center gap-1">
+                                查看更多 <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                            </button>
+                        </div>
+                        <!-- 标签页 -->
+                        <div class="flex gap-5 border-b border-gray-100 mb-5 text-sm">
+                            <button class="news-tab active pb-2" data-tab="all" onclick="switchNewsTab('all')">全部</button>
+                            <button class="news-tab pb-2" data-tab="news" onclick="switchNewsTab('news')">新闻</button>
+                            <button class="news-tab pb-2" data-tab="activity" onclick="switchNewsTab('activity')">活动</button>
+                        </div>
+                        <!-- 新闻列表 -->
+                        <div id="newsListContainer" class="flex-1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 资质荣誉与科研合作 -->
+    <section id="research" class="py-24 bg-light-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h3 class="text-3xl md:text-4xl font-bold deep-brown mb-2">科研赋能，品质保障</h3>
+                <span class="gold-accent text-sm font-medium tracking-wider uppercase">Research & Honor</span>
+                <p class="text-lg text-gray-600">以科技创新驱动传统产业升级</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="stat-card fade-in">
+                    <div class="w-16 h-16 gold-bg/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="graduation-cap" class="w-8 h-8 gold-accent"></i>
+                    </div>
+                    <h4 class="font-bold deep-brown mb-2">科研合作</h4>
+                    <p class="text-sm text-gray-600">与中国热带农业科学院深度合作</p>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="w-16 h-16 gold-bg/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="file-badge" class="w-8 h-8 gold-accent"></i>
+                    </div>
+                    <h4 class="font-bold deep-brown mb-2">专利认证</h4>
+                    <p class="text-sm text-gray-600">2项国家发明专利 + 欧盟专利</p>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="w-16 h-16 gold-bg/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="trees" class="w-8 h-8 gold-accent"></i>
+                    </div>
+                    <h4 class="font-bold deep-brown mb-2">种植规模</h4>
+                    <p class="text-sm text-gray-600">1.8万亩沉香种植基地</p>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="w-16 h-16 gold-bg/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="shield-check" class="w-8 h-8 gold-accent"></i>
+                    </div>
+                    <h4 class="font-bold deep-brown mb-2">品质认证</h4>
+                    <p class="text-sm text-gray-600">通过多项国家级权威检测</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="contact" class="bg-deep-brown text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h4 class="font-bold text-lg mb-6">联系方式</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="building-2" class="w-5 h-5 gold-accent flex-shrink-0 mt-0.5"></i>
+                            <span>海南天香文化有限公司</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="mail" class="w-5 h-5 gold-accent flex-shrink-0 mt-0.5"></i>
+                            <span>4689354@qq.com</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="map-pin" class="w-5 h-5 gold-accent flex-shrink-0 mt-0.5"></i>
+                            <span class="text-sm">海南省海口市龙华区城西镇城西路26号B栋东基创业基地210-B0249</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">关于我们</h4>
+                    <p class="text-gray-400 text-sm mb-4">扫码关注微信公众号，获取更多产品资讯</p>
+                    <div class="w-32 h-32 bg-white rounded-xl p-2">
+                        <img src="http://static.photos/technology/200x200/66" alt="微信公众号" class="w-full h-full object-cover rounded-lg">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 mt-12 pt-8 text-gray-400 text-sm">
+                <p>&copy; 2025 海南天香文化有限公司 版权所有 | 琼ICP备XXXXXXXX号</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 产品详情模态框 -->
+    <div id="productModal" class="modal">
+        <div class="modal-content relative">
+            <span class="close" onclick="closeModal()">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </span>
+            <div id="modalContent" class="max-h-[85vh] overflow-y-auto">
+                <!-- 动态内容 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 咨询弹窗 -->
+    <div id="consultModal" class="modal">
+        <div class="modal-content relative max-w-md">
+            <span class="close" onclick="closeConsultModal()">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </span>
+            <div class="p-8">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 gold-bg/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="message-circle" class="w-8 h-8 gold-accent"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold deep-brown">立即咨询</h3>
+                    <p class="text-gray-600 mt-2">我们的专业团队将为您提供服务</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <a href="tel:18976396888" class="flex items-center gap-4 p-4 bg-light-cream rounded-xl hover:bg-[#b8860b]/10 transition group">
+                        <div class="w-12 h-12 gold-bg rounded-full flex items-center justify-center group-hover:scale-110 transition">
+                            <i data-lucide="phone" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">电话咨询</p>
+                            <p class="font-bold deep-brown text-lg">18976396888</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-5 h-5 gold-accent ml-auto"></i>
+                    </a>
+                    
+                    <a href="mailto:4689354@qq.com" class="flex items-center gap-4 p-4 bg-light-cream rounded-xl hover:bg-[#b8860b]/10 transition group">
+                        <div class="w-12 h-12 gold-bg rounded-full flex items-center justify-center group-hover:scale-110 transition">
+                            <i data-lucide="mail" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">邮件咨询</p>
+                            <p class="font-bold deep-brown">4689354@qq.com</p>
+                        </div>
+                        <i data-lucide="chevron-right" class="w-5 h-5 gold-accent ml-auto"></i>
+                    </a>
+                    
+                    <div class="flex items-center gap-4 p-4 bg-light-cream rounded-xl">
+                        <div class="w-12 h-12 gold-bg rounded-full flex items-center justify-center">
+                            <i data-lucide="message-circle" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">微信咨询</p>
+                            <p class="font-bold deep-brown">扫码添加微信</p>
+                        </div>
+                        <div class="w-16 h-16 bg-white rounded-lg p-1 ml-auto">
+                            <img src="http://static.photos/technology/200x200/77" alt="微信二维码" class="w-full h-full object-cover rounded">
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-center text-sm text-gray-500 mt-6">
+                    工作时间：周一至周六 9:00-18:00
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 初始化 Lucide 图标
+        lucide.createIcons();
+        setTimeout(() => lucide.createIcons(), 100);
+
+        // Banner 全屏 → 75vh 过渡
+        function shrinkBanner() {
+            const banner = document.querySelector('.banner-hero');
+            if (banner) banner.classList.add('shrink');
+        }
+        setTimeout(shrinkBanner, 1000);
+
+        // ==================================================
+        // 🎬 Banner 森林动画配置
+        // ==================================================
+        const BANNER_ANIMATION_DURATION = 6000;
+
+        (function initBannerAnimation() {
+            const canvas = document.getElementById('bannerCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            let W, H;
+            let treeLayers = [[], [], []];
+            let fireflies = [];
+
+            function resize() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+                generateScene();
+            }
+
+            function generateScene() {
+                treeLayers = [[], [], []];
+                fireflies = [];
+
+                for (let layer = 0; layer < 3; layer++) {
+                    const count = 10 + layer * 5;
+                    for (let i = 0; i < count; i++) {
+                        treeLayers[layer].push({
+                            x: (i / count) * W + (Math.random() - 0.5) * (W / count * 0.9),
+                            height: (180 + Math.random() * 220) * (1 - layer * 0.12),
+                            width: (45 + Math.random() * 55) * (1 - layer * 0.08),
+                            sway: Math.random() * Math.PI * 2,
+                            canopyStyle: Math.floor(Math.random() * 3)
+                        });
+                    }
+                }
+
+                for (let i = 0; i < 55; i++) {
+                    fireflies.push({
+                        x: Math.random(), y: Math.random(),
+                        size: 1 + Math.random() * 2.2,
+                        speed: 0.3 + Math.random() * 1.2,
+                        phase: Math.random() * Math.PI * 2,
+                        brightness: 0.4 + Math.random() * 0.6
+                    });
+                }
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+
+            const startTime = performance.now();
+
+            function draw(progress) {
+                ctx.clearRect(0, 0, W, H);
+                const t = performance.now() / 1000;
+                const p = Math.min(1, progress);
+                const groundY = H * 0.82;
+
+                const sp = Math.min(1, p * 1.8);
+                const sky = ctx.createLinearGradient(0, 0, 0, H);
+                sky.addColorStop(0, `rgb(${8+sp*55},${5+sp*38},${18+sp*28})`);
+                sky.addColorStop(0.45, `rgb(${15+sp*95},${20+sp*70},${12+sp*38})`);
+                sky.addColorStop(1, `rgb(${22+sp*115},${32+sp*85},${16+sp*32})`);
+                ctx.fillStyle = sky;
+                ctx.fillRect(0, 0, W, H);
+
+                if (p < 0.65) {
+                    const sA = 1 - p / 0.65;
+                    ctx.fillStyle = `rgba(255,255,240,${sA})`;
+                    for (let i = 0; i < 70; i++) {
+                        const sx = (i * 137.508) % W;
+                        const sy = (i * 97.123) % (H * 0.4);
+                        ctx.beginPath();
+                        ctx.arc(sx, sy, (i % 3) * 0.5 + 0.5, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                if (p > 0.25) {
+                    const rA = Math.min(0.1, (p - 0.25) * 0.18);
+                    for (let i = 0; i < 5; i++) {
+                        ctx.save();
+                        ctx.globalAlpha = rA;
+                        const rx = W * 0.18 + i * W * 0.13;
+                        ctx.beginPath();
+                        ctx.moveTo(rx, 0);
+                        ctx.lineTo(rx - W * 0.025, H * 0.88);
+                        ctx.lineTo(rx + W * 0.055, H * 0.88);
+                        ctx.closePath();
+                        const rg = ctx.createLinearGradient(0, 0, 0, H);
+                        rg.addColorStop(0, 'rgba(255,230,160,0.35)');
+                        rg.addColorStop(0.6, 'rgba(255,220,140,0.08)');
+                        rg.addColorStop(1, 'rgba(255,210,120,0)');
+                        ctx.fillStyle = rg;
+                        ctx.fill();
+                        ctx.restore();
+                    }
+                }
+
+                const layerAlphas = [0.55, 0.75, 0.95];
+                const layerGreens = [32, 22, 14];
+
+                for (let l = 0; l < 3; l++) {
+                    const alpha = Math.min(layerAlphas[l], Math.max(0, p * 2.2 - l * 0.45));
+                    if (alpha <= 0) continue;
+                    ctx.save();
+                    ctx.globalAlpha = alpha;
+                    const g = layerGreens[l] + sp * 18;
+                    const trunkG = g * 0.55;
+
+                    treeLayers[l].forEach(tree => {
+                        const sway = Math.sin(t * 0.35 + tree.sway) * (2.5 - l * 0.7);
+                        const tw = tree.width * 0.1;
+
+                        ctx.fillStyle = `rgb(${trunkG*0.5},${trunkG},${trunkG*0.35})`;
+                        ctx.fillRect(tree.x - tw/2 + sway*0.3, groundY - tree.height, tw, tree.height);
+
+                        ctx.fillStyle = `rgb(${g*0.4},${g},${g*0.3})`;
+                        for (let j = 0; j < 3; j++) {
+                            const cH = tree.height * 0.42 * (1 - j * 0.12);
+                            const cW = tree.width * (1 - j * 0.18);
+                            const cY = groundY - tree.height + j * tree.height * 0.13;
+                            ctx.beginPath();
+                            ctx.moveTo(tree.x + sway, cY - cH);
+                            ctx.lineTo(tree.x - cW/2 + sway*0.5, cY + cH*0.15);
+                            ctx.lineTo(tree.x + cW/2 + sway*0.5, cY + cH*0.15);
+                            ctx.closePath();
+                            ctx.fill();
+                        }
+                    });
+                    ctx.restore();
+                }
+
+                const gndG = ctx.createLinearGradient(0, groundY, 0, H);
+                gndG.addColorStop(0, `rgb(${10+sp*12},${18+sp*14},${6+sp*6})`);
+                gndG.addColorStop(1, `rgb(${14+sp*10},${22+sp*12},${8+sp*5})`);
+                ctx.fillStyle = gndG;
+                ctx.fillRect(0, groundY, W, H - groundY);
+
+                ctx.fillStyle = `rgba(${12+sp*8},${20+sp*10},${8+sp*4},0.6)`;
+                for (let i = 0; i < 40; i++) {
+                    const gx = (i / 40) * W;
+                    const gy = groundY + 2;
+                    ctx.fillRect(gx, gy, 2, 4 + Math.random() * 12);
+                }
+
+                if (p > 0.4) {
+                    const mA = Math.min(0.22, (p - 0.4) * 0.38);
+                    ctx.save();
+                    for (let i = 0; i < 5; i++) {
+                        const my = groundY - 25 + i * 16;
+                        const mShift = Math.sin(t * 0.18 + i * 0.9) * 45;
+                        ctx.globalAlpha = mA * (1 - i * 0.14);
+                        const mg = ctx.createLinearGradient(mShift - 60, my, W + mShift + 60, my + 35);
+                        mg.addColorStop(0, 'rgba(180,200,170,0)');
+                        mg.addColorStop(0.25, 'rgba(180,200,170,0.1)');
+                        mg.addColorStop(0.5, 'rgba(185,205,175,0.16)');
+                        mg.addColorStop(0.75, 'rgba(180,200,170,0.1)');
+                        mg.addColorStop(1, 'rgba(180,200,170,0)');
+                        ctx.fillStyle = mg;
+                        ctx.fillRect(-80, my, W + 160, 35);
+                    }
+                    ctx.restore();
+                }
+
+                if (p > 0.32) {
+                    const fA = Math.min(1, (p - 0.32) * 2.2);
+                    fireflies.forEach(ff => {
+                        const fx = ff.x * W + Math.sin(t * ff.speed + ff.phase) * 22;
+                        const fy = ff.y * H + Math.cos(t * ff.speed * 0.65 + ff.phase) * 18;
+                        const b = (Math.sin(t * ff.speed * 2.2 + ff.phase) + 1) / 2;
+                        ctx.save();
+                        ctx.globalAlpha = fA * b * ff.brightness * 0.18;
+                        ctx.fillStyle = 'rgba(255,240,150,0.5)';
+                        ctx.beginPath();
+                        ctx.arc(fx, fy, ff.size * 7, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.globalAlpha = fA * b * ff.brightness * 0.9;
+                        ctx.fillStyle = 'rgba(255,250,200,0.95)';
+                        ctx.beginPath();
+                        ctx.arc(fx, fy, ff.size, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.restore();
+                    });
+                }
+
+                const vig = ctx.createRadialGradient(W/2, H/2, W*0.25, W/2, H/2, W*0.75);
+                vig.addColorStop(0, 'rgba(0,0,0,0)');
+                vig.addColorStop(1, 'rgba(0,0,0,0.35)');
+                ctx.fillStyle = vig;
+                ctx.fillRect(0, 0, W, H);
+            }
+
+            function animate(timestamp) {
+                const elapsed = timestamp - startTime;
+                const progress = elapsed / BANNER_ANIMATION_DURATION;
+                draw(progress);
+                if (progress > 0.75) {
+                    canvas.style.opacity = Math.max(0, 1 - (progress - 0.75) / 0.25);
+                }
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    canvas.style.display = 'none';
+                }
+            }
+            requestAnimationFrame(animate);
+        })();
+        
+        // 产品数据
+        const products = {
+            aloeswood: {
+                name: '沉香系列',
+                description: '沉香，被誉为"植物中的钻石"，是海南最具代表性的珍稀名木。我们的沉香产品源自1.8万亩生态种植基地，每一款产品都承载着大自然的馈赠与匠人的心血。',
+                items: [
+                    { name: '沉香手串', image: 'http://static.photos/minimal/400x300/101', desc: '精选百年沉香老料，手工打磨，油脂饱满，香气醇厚持久。佩戴可修身养性，安神定气。', price: '¥1,280起' },
+                    { name: '沉香精油', image: 'http://static.photos/minimal/400x300/102', desc: '超临界萃取技术提炼，100%纯天然沉香精油。具有安神助眠、舒缓压力、净化空气的功效。', price: '¥680起' },
+                    { name: '沉香熏香', image: 'http://static.photos/minimal/400x300/103', desc: '传统手工制香工艺，选用顶级沉香原料。香烟袅袅，香气清雅，是冥想、品茶、会客的上佳之选。', price: '¥298起' },
+                    { name: '海沉香酒', image: 'http://static.photos/minimal/400x300/104', desc: '国家发明专利产品，以沉香提取物与优质白酒科学配制。具有养生保健功效，口感醇厚。', price: '¥598起' }
+                ]
+            },
+            rosewood: {
+                name: '花梨木系列',
+                description: '海南黄花梨，素有"木中黄金"之称，纹理美观，香气淡雅。我们的花梨木产品精选优质原料，融合传统雕刻工艺与现代设计理念。',
+                items: [
+                    { name: '花梨木手串', image: 'http://static.photos/wood/400x300/201', desc: '海南黄花梨老料制作，纹理清晰美观，色泽温润。佩戴可舒缓神经，具有收藏价值。', price: '¥2,580起' },
+                    { name: '花梨木雕件', image: 'http://static.photos/craft/400x300/202', desc: '名师手工雕刻，题材涵盖传统吉祥图案与现代抽象艺术。每一件都是独一无二的艺术品。', price: '¥3,880起' },
+                    { name: '花梨木精油', image: 'http://static.photos/minimal/400x300/203', desc: '从花梨木中提取的珍贵精油，具有舒缓神经、美容养颜的功效。可用于香薰或护肤。', price: '¥520起' },
+                    { name: '花梨木茶具', image: 'http://static.photos/minimal/400x300/204', desc: '精选花梨木制作的茶盘、茶杯等茶具，纹理自然美观，使用越久色泽越温润。', price: '¥1,880起' }
+                ]
+            },
+            jiangzhen: {
+                name: '降真香系列',
+                description: '降真香，道家首香，自古被视为通灵避邪的圣物。我们的降真香产品秉承传统工艺，保留其独特的香气与功效。',
+                items: [
+                    { name: '降真香手串', image: 'http://static.photos/minimal/400x300/301', desc: '降真香制作的手串，香气独特，具有辟邪安神的作用。深受道家文化爱好者喜爱。', price: '¥880起' },
+                    { name: '降真香熏香', image: 'http://static.photos/minimal/400x300/302', desc: '纯天然降真香制作的熏香，燃烧时香气浓郁，可净化空气，驱邪避秽，舒缓心情。', price: '¥258起' },
+                    { name: '降真香精油', image: 'http://static.photos/minimal/400x300/303', desc: '降真香提取的精油，可用于香薰、按摩，具有安神定气、活血化瘀的功效。', price: '¥468起' },
+                    { name: '降真香碎料', image: 'http://static.photos/minimal/400x300/304', desc: '精选降真香碎料，可用于制作香包、熏香，或入药使用。性价比高，用途广泛。', price: '¥168起' }
+                ]
+            },
+            healthwine: {
+                name: '酥香保健酒系列',
+                description: '融合海南特色草本植物与沉香提取物的保健酒，国家发明专利配方，具有独特的养生保健功效。',
+                items: [
+                    { name: '酥香保健酒', image: 'http://static.photos/minimal/400x300/401', desc: '国家发明专利产品，采用沉香、枸杞、当归等多种名贵药材配制。具有补肾壮阳、活血通络的功效。', price: '¥398起' },
+                    { name: '沉香养生酒', image: 'http://static.photos/minimal/400x300/402', desc: '以沉香为主要原料，结合传统酿造工艺。口感醇厚，具有安神助眠、调理气血的功效。', price: '¥568起' },
+                    { name: '花梨木养生酒', image: 'http://static.photos/minimal/400x300/403', desc: '萃取花梨木精华配制，具有舒缓神经、美容养颜的功效。适合女性饮用。', price: '¥428起' },
+                    { name: '降真香保健酒', image: 'http://static.photos/minimal/400x300/404', desc: '融合降真香与多种草本精华，具有辟邪安神、强身健体的功效。道家养生首选。', price: '¥368起' }
+                ]
+            }
+        };
+
+        let currentProduct = null;
+
+        // 打开产品模态框
+        function openModal(category) {
+            currentProduct = category;
+            const modal = document.getElementById('productModal');
+            const content = document.getElementById('modalContent');
+            const product = products[category];
+            content.innerHTML = `
+                <div class="relative">
+                    <div class="h-48 md:h-64 bg-gradient-to-r from-[#3d2914] to-[#5d4124] flex items-center justify-center">
+                        <div class="text-center text-white px-8">
+                            <h2 class="text-3xl md:text-4xl font-bold mb-3">${product.name}</h2>
+                            <p class="text-white/80 max-w-xl">${product.description}</p>
+                        </div>
+                    </div>
+                    <div class="p-6 md:p-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            ${product.items.map(item => `
+                                <div class="product-grid-item bg-light-cream overflow-hidden" onclick="showItemDetail('${category}', '${item.name}')">
+                                    <div class="relative h-48 overflow-hidden">
+                                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                                            <span class="text-white font-bold">${item.price}</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="font-bold deep-brown text-lg mb-2">${item.name}</h3>
+                                        <p class="text-gray-600 text-sm line-clamp-2">${item.desc}</p>
+                                        <div class="mt-3 flex items-center gold-accent text-sm font-medium">
+                                            查看详情
+                                            <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        // 显示产品详情
+        function showItemDetail(category, itemName) {
+            const product = products[category];
+            const item = product.items.find(i => i.name === itemName);
+            const content = document.getElementById('modalContent');
+            content.innerHTML = `
+                <div class="relative">
+                    <div class="grid grid-cols-1 md:grid-cols-2">
+                        <div class="h-64 md:h-auto">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6 md:p-8 flex flex-col">
+                            <div class="mb-auto">
+                                <span class="gold-accent text-sm font-medium">${product.name}</span>
+                                <h2 class="text-2xl md:text-3xl font-bold deep-brown mt-2 mb-4">${item.name}</h2>
+                                <p class="text-3xl font-bold gold-accent mb-6">${item.price}</p>
+                                <p class="text-gray-700 leading-relaxed mb-6">${item.desc}</p>
+                                <div class="space-y-3 mb-6">
+                                    <div class="flex items-center gap-3 text-sm text-gray-600">
+                                        <i data-lucide="check-circle" class="w-5 h-5 gold-accent"></i>
+                                        <span>100%纯天然原料</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 text-sm text-gray-600">
+                                        <i data-lucide="check-circle" class="w-5 h-5 gold-accent"></i>
+                                        <span>国家专利认证</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 text-sm text-gray-600">
+                                        <i data-lucide="check-circle" class="w-5 h-5 gold-accent"></i>
+                                        <span>权威质检报告</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <button onclick="openConsult()" class="btn-primary w-full text-white py-4 rounded-xl font-medium flex items-center justify-center gap-2">
+                                    <i data-lucide="phone" class="w-5 h-5"></i>
+                                    立即咨询
+                                </button>
+                                <button onclick="openModal('${category}')" class="w-full py-4 border-2 border-gray-200 rounded-xl font-medium text-gray-600 hover:border-[#b8860b] hover:text-[#b8860b] transition flex items-center justify-center gap-2">
+                                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                                    返回产品列表
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        // 关闭产品模态框
+        function closeModal() {
+            const modal = document.getElementById('productModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // 打开咨询弹窗
+        function openConsult() {
+            const modal = document.getElementById('consultModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 关闭咨询弹窗
+        function closeConsultModal() {
+            const modal = document.getElementById('consultModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // 移动端菜单
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+        closeMobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // 滚动动画 - fade-in
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            fadeObserver.observe(el);
+        });
+
+        // 滚动动画 - story-section
+        const storyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.story-section').forEach(el => {
+            storyObserver.observe(el);
+        });
+
+        // 品牌故事详情弹窗数据
+        const brandStoryData = {
+            origin: {
+                title: '创立初心',
+                subtitle: 'Origin',
+                image: 'http://static.photos/nature/640x360/11',
+                content: `<p>1992年，在海南这片热带宝地上，海南天香文化有限公司应运而生。创始人深知海南沉香、花梨木等珍稀名木的珍贵价值，怀揣着将海南香文化发扬光大的初心，开始了这段匠心之旅。</p>
+                <p>彼时的海南，沉香产业尚处于萌芽阶段。公司从零开始，深耕沉香种植技术，探索沉香衍生品开发，逐步建立起从种植到产品的完整产业链。</p>
+                <p>三十余年来，无论市场如何变幻，我们始终坚守"源于自然，匠心手作"的理念，将每一件产品都视为对自然的敬畏与对匠心的传承。</p>`
+            },
+            planting: {
+                title: '生态种植',
+                subtitle: 'Planting',
+                image: 'http://static.photos/nature/640x360/22',
+                content: `<p>公司拥有1.8万亩沉香种植基地，是目前国内最大的沉香种植企业之一。基地位于海南岛优质沉香产区，得天独厚的热带气候为沉香生长提供了最佳环境。</p>
+                <p>我们坚持生态种植理念，不使用化学农药和化肥，采用传统的人工管护方式，确保每一株沉香树都能在最佳自然环境中健康成长。</p>
+                <p>经过多年的探索与实践，我们已掌握成熟的沉香结香技术，能够科学引导沉香树自然结香，在保护树木的前提下获取优质沉香原料。</p>`
+            },
+            craft: {
+                title: '匠心工艺',
+                subtitle: 'Craftsmanship',
+                image: 'http://static.photos/craft/640x360/33',
+                content: `<p>"源于自然，匠心手作"不仅是一句口号，更是我们每一位匠人的行动准则。从选材到成品，每一道工序都倾注了匠人的心血与智慧。</p>
+                <p>沉香手串的打磨需要经过数十道工序，匠人凭借多年的经验，将每一颗珠子打磨至温润如玉。熏香的制作遵循古法，从原料研磨到成型晾晒，每一步都严格把控。</p>
+                <p>精油的提取采用现代超临界萃取技术，在保留沉香有效成分的同时，确保精油的纯度和品质。每一滴精油，都凝聚着大自然的精华与现代科技的智慧。</p>`
+            },
+            research: {
+                title: '科研创新',
+                subtitle: 'Research',
+                image: 'http://static.photos/technology/640x360/44',
+                content: `<p>公司与中国热带农业科学院建立长期战略合作关系，依托国家级科研平台，深入开展沉香、花梨木、降真香的深度开发研究。</p>
+                <p>经过多年的科研攻关，公司已获得<strong>2项国家发明专利</strong>和<strong>1项欧盟专利</strong>，在沉香有效成分提取、沉香酒酿造工艺等领域取得突破性成果。</p>
+                <p>旗下"海沉香酒"品牌产品，正是科研成果转化的典范。该产品采用专利配方和工艺，将沉香提取物与优质白酒科学配制，兼具养生保健功效和独特口感。</p>`
+            },
+            vision: {
+                title: '走向世界',
+                subtitle: 'Vision',
+                image: 'http://static.photos/travel/640x360/55',
+                content: `<p>海南自由贸易港的建设为天香文化带来了前所未有的发展机遇。我们正积极布局国际市场，让海南独特的香文化飘向全球。</p>
+                <p>公司产品已通过多项国际权威检测，"海沉香酒"品牌荣获多项国际大奖，品质获得国际认可。我们将继续深化与海外市场的合作，拓展产品销售渠道。</p>
+                <p>未来，天香文化将继续坚持"源于自然，匠心手作"的理念，以科技创新驱动产业升级，以文化传承赋予品牌灵魂，让世界感受到海南香文化的独特魅力。</p>`
+            }
+        };
+
+        // 新闻动态数据
+        const newsData = [
+            {
+                type: 'news',
+                date: '2025-06-10',
+                title: '天香文化荣获海南省科技创新先进单位称号',
+                summary: '凭借在沉香深加工领域的持续创新，公司获评2025年度海南省科技创新先进单位。'
+            },
+            {
+                type: 'activity',
+                date: '2025-05-28',
+                title: '2025海口国际沉香产业博览会盛大开幕',
+                summary: '天香文化携全线产品亮相香博会，现场体验沉香文化魅力。'
+            },
+            {
+                type: 'news',
+                date: '2025-05-15',
+                title: '公司新增1项国家发明专利授权',
+                summary: '沉香精油高效提取方法获国家发明专利，累计专利数达3项。'
+            },
+            {
+                type: 'activity',
+                date: '2025-04-22',
+                title: '沉香种植基地开放日暨生态体验活动',
+                summary: '邀请市民走进1.8万亩沉香基地，体验采香、品香的乐趣。'
+            },
+            {
+                type: 'news',
+                date: '2025-04-08',
+                title: '与中国热科院签署新一轮战略合作协议',
+                summary: '双方将在沉香成分研究、产品开发等领域展开更深层次合作。'
+            },
+            {
+                type: 'activity',
+                date: '2025-03-15',
+                title: '天香文化春季新品发布暨品鉴会',
+                summary: '发布2025春季新品系列，特邀香道大师现场演示传统香道。'
+            },
+            {
+                type: 'news',
+                date: '2025-02-20',
+                title: '海沉香酒通过欧盟CE认证，加速出海布局',
+                summary: '产品品质获国际权威认可，为进入欧洲市场奠定基础。'
+            },
+            {
+                type: 'activity',
+                date: '2025-01-18',
+                title: '新春送福——天香文化公益慰问活动',
+                summary: '走进海口社区，为居民送去沉香福袋与新春祝福。'
+            }
+        ];
+
+        let currentNewsTab = 'all';
+
+        // 切换新闻标签
+        function switchNewsTab(tab) {
+            currentNewsTab = tab;
+            // 更新标签样式
+            document.querySelectorAll('.news-tab').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tab);
+            });
+            renderNewsList();
+        }
+
+        // 渲染新闻列表
+        function renderNewsList() {
+            const container = document.getElementById('newsListContainer');
+            const filtered = currentNewsTab === 'all' ? newsData : newsData.filter(item => item.type === currentNewsTab);
+            const displayList = filtered.slice(0, 5);
+            
+            if (displayList.length === 0) {
+                container.innerHTML = '<div class="py-10 text-center text-gray-400 text-sm">暂无内容</div>';
+                return;
+            }
+
+            container.innerHTML = displayList.map((item) => {
+                const dateParts = item.date.split('-');
+                return `
+                    <div class="news-list-item" onclick="openNewsDetail('${item.date}','${item.type}')">
+                        <div class="news-date-box">
+                            <div class="news-date-day">${dateParts[2]}</div>
+                            <div class="news-date-month">${dateParts[1]}月</div>
+                        </div>
+                        <div class="news-list-body">
+                            <span class="news-list-title">${item.title}</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 news-list-arrow"></i>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        // 打开新闻详情弹窗
+        function openNewsDetail(date, type) {
+            const item = newsData.find(n => n.date === date && n.type === type);
+            if (!item) return;
+            const modal = document.getElementById('productModal');
+            const content = document.getElementById('modalContent');
+            const tagText = item.type === 'news' ? '公司新闻' : '公司活动';
+            const tagClass = item.type === 'news' ? 'news-tag-news' : 'news-tag-activity';
+            content.innerHTML = `
+                <div class="p-6 md:p-8">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="news-tag ${tagClass}" style="font-size:12px;padding:2px 12px;">${tagText}</span>
+                        <span class="text-xs text-gray-400">${item.date}</span>
+                    </div>
+                    <h2 class="text-xl md:text-2xl font-bold deep-brown mb-4 leading-relaxed">${item.title}</h2>
+                    <div class="text-gray-600 text-sm leading-relaxed space-y-3">
+                        <p>${item.summary}</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100 flex justify-center items-center">
+                        <button onclick="closeModal()" class="text-gray-500 hover:deep-brown text-sm flex items-center gap-1 transition">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                            关闭
+                        </button>
+                    </div>
+                </div>
+            `;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        // 查看更多新闻
+        function openNewsMore() {
+            const modal = document.getElementById('productModal');
+            const content = document.getElementById('modalContent');
+            content.innerHTML = `
+                <div class="p-6 md:p-8">
+                    <h2 class="text-2xl font-bold deep-brown mb-6">全部动态</h2>
+                    <div class="space-y-4">
+                        ${newsData.map(item => {
+                            const tagText = item.type === 'news' ? '新闻' : '活动';
+                            const tagClass = item.type === 'news' ? 'news-tag-news' : 'news-tag-activity';
+                            return `
+                                <div class="flex gap-4 p-4 rounded-xl bg-light-cream hover:bg-[#b8860b]/5 transition cursor-pointer" onclick="closeModal();setTimeout(()=>openNewsDetail('${item.date}','${item.type}'),300)">
+                                    <div class="flex-shrink-0 text-center" style="width:50px;">
+                                        <div class="text-xl font-bold deep-brown">${item.date.split('-')[2]}</div>
+                                        <div class="text-xs gold-accent">${item.date.split('-')[1]}月</div>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="news-tag ${tagClass}">${tagText}</span>
+                                            <span class="text-xs text-gray-400">${item.date}</span>
+                                        </div>
+                                        <div class="font-semibold deep-brown text-sm leading-relaxed">${item.title}</div>
+                                        <div class="text-xs text-gray-500 mt-1">${item.summary}</div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-gray-100 text-center">
+                        <button onclick="closeModal()" class="text-gray-500 hover:deep-brown text-sm flex items-center gap-1 transition mx-auto">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                            关闭
+                        </button>
+                    </div>
+                </div>
+            `;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        // 初始化新闻列表
+        renderNewsList();
+
+        // 打开品牌故事详情弹窗
+        function openBrandDetail(key) {
+            const data = brandStoryData[key];
+            if (!data) return;
+            const modal = document.getElementById('productModal');
+            const content = document.getElementById('modalContent');
+            content.innerHTML = `
+                <div class="relative">
+                    <div class="h-48 md:h-56 overflow-hidden">
+                        <img src="${data.image}" alt="${data.title}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#3d2914]/80 to-transparent flex items-end p-6 md:p-8">
+                            <div>
+                                <span class="gold-accent text-sm font-medium tracking-wider uppercase">${data.subtitle}</span>
+                                <h2 class="text-2xl md:text-3xl font-bold text-white mt-1">${data.title}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 md:p-8">
+                        <div class="prose prose-sm max-w-none text-gray-700 leading-relaxed space-y-4">
+                            ${data.content}
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-gray-100 flex justify-between items-center">
+                            <button onclick="openConsult()" class="btn-primary text-white px-6 py-2 rounded-full text-sm font-medium flex items-center gap-2">
+                                咨询详情
+                            </button>
+                            <button onclick="closeModal()" class="text-gray-500 hover:deep-brown text-sm flex items-center gap-1 transition">
+                                <i data-lucide="x" class="w-4 h-4"></i>
+                                关闭
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        // 导航栏滚动效果
+        let lastScroll = 0;
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > 100) {
+                nav.classList.add('shadow-lg');
+            } else {
+                nav.classList.remove('shadow-lg');
+            }
+            lastScroll = currentScroll;
+        });
+
+        // ESC键关闭模态框
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
+<script src="https://deepsite.hf.co/deepsite-badge.js"></script>
+</body>
+</html>
